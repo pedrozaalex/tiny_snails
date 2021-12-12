@@ -12,9 +12,4 @@ app.use(morgan('dev'));
 app.use('/hello', hello);
 app.use('/url/', url);
 
-if (require.main === module) {
-  const port = 3001;
-  app.listen(port);
-}
-
 export default app;
