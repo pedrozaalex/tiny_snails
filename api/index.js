@@ -12,4 +12,7 @@ app.use(morgan('dev'));
 app.use('/hello', hello);
 app.use('/url', url);
 
-export default app;
+export default {
+  path: '/api',
+  handler: app
+};
