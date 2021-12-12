@@ -5,6 +5,11 @@ import morgan from 'morgan';
 import hello from './hello';
 import url from './url';
 
+// prevent unhandled rejections from stopping the process
+process.on('unhandledRejection', (reason, p) => {
+  console.error('Unhandled Rejection at: Promise', p, 'reason:', reason);
+});
+
 const app = express();
 app.use(express.json());
 app.use(morgan('dev'));

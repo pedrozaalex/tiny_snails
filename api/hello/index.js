@@ -2,9 +2,9 @@ import { Router } from 'express';
 const router = Router();
 
 router.get('/', (_req, res, _next) => {
-  return res.status(500).json({ error: 'Not implemented' });
+  throw new Error('Something went wrong!');
 
-  res.end('Hello world!');
+  // res.end('Hello world!');
 });
 
 export default router;
