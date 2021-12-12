@@ -7,12 +7,10 @@ import axios from 'axios';
 export default {
   async fetch({ params: { slug }, redirect, $config }) {
     try {
-      const { data: url } = await axios.get(
-        `${$config.baseURL}/api/url/${slug}`
-      );
-      return redirect(url.url);
+      const { data } = await axios.get(`${$config.baseURL}/api/snails/${slug}`);
+      return redirect(data.url);
     } catch (error) {
-      return redirect('/404.html');
+      return redirect('/404');
     }
   },
   fetchOnServer: false

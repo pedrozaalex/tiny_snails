@@ -175,7 +175,7 @@ export default {
       const slug = this.slug
 
       try {
-        const { data } = await axios.post(`${this.$config.baseURL}/api/url`, {
+        const { data } = await axios.post(`${this.$config.baseURL}/api/snails`, {
           url,
           slug
         })
