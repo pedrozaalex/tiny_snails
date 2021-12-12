@@ -11,8 +11,8 @@ process.on('unhandledRejection', (reason, p) => {
 });
 
 const app = express();
-app.use(express.json());
 app.use(morgan('dev'));
+app.use(express.json());
 
 app.use('/hello', hello);
 app.use('/url', url);
