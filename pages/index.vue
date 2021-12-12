@@ -92,6 +92,7 @@
 </template>
 
 <script lang="js">
+import axios from 'axios'
 import {
   CBox,
   CIconButton,
@@ -175,25 +176,17 @@ export default {
 
       // send the request to the server
       try {
-        const results = await fetch(`${this.$config.baseURL}/api/url`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            url,
-            slug
-          })
+        const {data} = await axios.post('/api/url', {
+          url,
+          slug
         })
-        const data = await results.json()
-
-        if(data.error) throw new Error(data.error)
         
         this.request.data = data
         this.request.loading = false
         this.request.success = true
       } catch (error) {
-        this.request.error = error
+        console.log(error)
+        this.request.error = error.message
         this.request.loading = false
       }
     }
