@@ -7,15 +7,6 @@ const faunaClient = new faunadb.Client({
 });
 const q = faunadb.query;
 
-type Url = {
-  id: number;
-  url: string;
-  alias: string;
-  clicks: number;
-};
-
-const urls: Url[] = [];
-
 // return 100 most popular urls
 router.get('/', (_req, _res, _next) => {
   // _res.json(urls.sort((a, b) => b.clicks - a.clicks).slice(0, 100));

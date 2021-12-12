@@ -179,7 +179,6 @@ export default {
           url,
           slug
         })
-        console.log('result: :', result)
         const { data } = result
         this.request.data = data
         this.request.loading = false
