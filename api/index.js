@@ -1,23 +1,11 @@
-import express from 'express';
-import morgan from 'morgan';
+const express = require('express');
+const app = express();
 
-// routers
-import hello from './hello';
-import url from './url';
-
-// prevent unhandled rejections from stopping the process
-process.on('unhandledRejection', (reason, p) => {
-  console.error('Unhandled Rejection at: Promise', p, 'reason:', reason);
+app.get('/echo/:what', (req, res) => {
+  res.json(req.params);
 });
 
-const app = express();
-app.use(morgan('dev'));
-app.use(express.json());
-
-app.use('/hello', hello);
-app.use('/url', url);
-
-export default {
+module.exports = {
   path: '/api',
   handler: app
 };
