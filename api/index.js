@@ -10,6 +10,6 @@ app.use(express.json());
 app.use(morgan('dev'));
 
 app.use('/hello', hello);
-app.use('/url/', url);
+app.use('/url', url);
 
 export default app;

@@ -11,12 +11,12 @@ const router = Router();
 const urls = []; // Url[]
 
 // return 100 most popular urls
-router.get('/', (_req, _res) => {
+router.get('/', (_req, _res, _next) => {
   _res.json(urls.sort((a, b) => b.clicks - a.clicks).slice(0, 100));
 });
 
 // create a new shortened url
-router.post('/', (req, res) => {
+router.post('/', (req, res, _next) => {
   const id = urls.length + 1;
   const url = req.body.url;
   // if no alias is provided, generate a random one
@@ -27,7 +27,7 @@ router.post('/', (req, res) => {
 });
 
 // get the url for a given alias
-router.get('/:alias', (req, res) => {
+router.get('/:alias', (req, res, _next) => {
   const alias = req.params.alias;
   const url = urls.find((url) => url.alias === alias);
   if (url) {
