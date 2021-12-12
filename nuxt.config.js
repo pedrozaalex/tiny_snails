@@ -44,7 +44,7 @@ export default {
   ],
 
   publicRuntimeConfig: {
-    baseURL: 'http://localhost:3000'
+    baseURL: process.env.BASE_URL
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
