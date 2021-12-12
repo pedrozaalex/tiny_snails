@@ -1,14 +1,14 @@
 import { Router } from 'express';
 const router = Router();
 
-// type Url = {
-//   id: number;
-//   url: string;
-//   alias: string;
-//   clicks: number;
-// };
+type Url = {
+  id: number;
+  url: string;
+  alias: string;
+  clicks: number;
+};
 
-const urls = []; // Url[]
+const urls: Url[] = [];
 
 // return 100 most popular urls
 router.get('/', (_req, _res, _next) => {
