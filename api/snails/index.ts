@@ -1,5 +1,11 @@
 import { Router } from 'express';
+import faunadb from 'faunadb';
+
 const router = Router();
+const faunaClient = new faunadb.Client({
+  secret: process.env.FAUNA_SECRET_KEY ?? ''
+});
+const q = faunadb.query;
 
 type Url = {
   id: number;
@@ -12,30 +18,41 @@ const urls: Url[] = [];
 
 // return 100 most popular urls
 router.get('/', (_req, _res, _next) => {
-  _res.json(urls.sort((a, b) => b.clicks - a.clicks).slice(0, 100));
+  // _res.json(urls.sort((a, b) => b.clicks - a.clicks).slice(0, 100));
+  _res.json({ error: 'not implemented' });
 });
 
 // create a new shortened url
-router.post('/', (req, res, _next) => {
-  const id = urls.length + 1;
+router.post('/', async (req, res, _next) => {
   const url = req.body.url;
-  // if no alias is provided, generate a random one
   const alias = req.body.slug || Math.random().toString(36).substring(2, 15);
-  const newUrl = { id, url, alias, clicks: 0 };
-  urls.push(newUrl);
-  res.json(newUrl);
+
+  // TODO auto generate sdk from fauna so we don't have to do "any"
+  const { data }: any = await faunaClient.query(
+    q.Create(q.Collection('snails'), {
+      data: {
+        alias,
+        url,
+        clicks: 0
+      }
+    })
+  );
+
+  res.json(data);
 });
 
 // get the url for a given alias
-router.get('/:alias', (req, res, _next) => {
+router.get('/:alias', async (req, res, _next) => {
   const alias = req.params.alias;
-  const url = urls.find((url) => url.alias === alias);
-  if (url) {
-    url.clicks++;
-    res.json(url);
-  } else {
-    res.status(404).send('Not found');
-  }
+  const doc: any = await faunaClient.query(
+    q.Get(q.Match(q.Index('aliases'), alias))
+  );
+
+  await faunaClient.query(
+    q.Update(q.Ref(doc.ref), { data: { clicks: doc.data.clicks + 1 } })
+  );
+
+  res.json(doc.data);
 });
 
 export default router;

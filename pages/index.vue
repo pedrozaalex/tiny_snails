@@ -175,10 +175,12 @@ export default {
       const slug = this.slug
 
       try {
-        const { data } = await axios.post(`${this.$config.baseURL}/api/snails`, {
+        const result = await axios.post(`${this.$config.baseURL}/api/snails`, {
           url,
           slug
         })
+        console.log('result: :', result)
+        const { data } = result
         this.request.data = data
         this.request.loading = false
         this.request.success = true
