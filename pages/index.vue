@@ -34,6 +34,7 @@
       >
         <CFormControl
           text-align="center"
+          max-w="80%"
           :is-invalid="request.success === false"
         >
           <CFormLabel for="url">your url</CFormLabel>
