@@ -7,6 +7,26 @@ const faunaClient = new faunadb.Client({
 });
 const q = faunadb.query;
 
+const generateRandomSlug = async (tries: number = 0): Promise<string> => {
+  const chars = process.env.SLUG_CHARS ?? 'abcdefghijklmnopqrstuvwxyz';
+  const length = process.env.SLUG_LENGTH ?? 6;
+  const maxTries = process.env.SLUG_MAX_TRIES ?? 5;
+
+  const slugExists = async (s: string) =>
+    await faunaClient.query(q.Exists(q.Match(q.Index('aliases'), s)));
+
+  const slug = [...Array(length).keys()]
+    .map(() => chars[Math.floor(Math.random() * chars.length)])
+    .join('');
+
+  const exists = await slugExists(slug);
+
+  if (!exists) return slug;
+  else if (tries < maxTries) return generateRandomSlug(tries + 1);
+
+  throw new Error('Could not generate unique slug');
+};
+
 // return 100 most popular urls
 router.get('/', (_req, _res, _next) => {
   // _res.json(urls.sort((a, b) => b.clicks - a.clicks).slice(0, 100));
@@ -16,7 +36,7 @@ router.get('/', (_req, _res, _next) => {
 // create a new shortened url
 router.post('/', async (req, res, _next) => {
   const url = req.body.url;
-  const alias = req.body.slug || Math.random().toString(36).substring(2, 15);
+  const alias = req.body.slug || (await generateRandomSlug());
 
   // TODO auto generate sdk from fauna so we don't have to do "any"
   const { data }: any = await faunaClient.query(

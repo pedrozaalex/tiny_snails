@@ -8,6 +8,7 @@ export default {
   async fetch({ params: { slug }, redirect, $config }) {
     try {
       const { data } = await axios.get(`${$config.baseURL}/api/snails/${slug}`);
+      console.log(data);
       return redirect(data.url);
     } catch (error) {
       return redirect('/404');

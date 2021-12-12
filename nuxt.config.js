@@ -44,7 +44,9 @@ export default {
   ],
 
   publicRuntimeConfig: {
-    baseURL: process.env.BASE_URL
+    baseURL: process.env.BASE_URL,
+    slugChars: 'abcdefghijklmnopqrstuvwxyz',
+    slugLength: 4
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
