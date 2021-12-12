@@ -27,7 +27,7 @@
         </nav>
       </CFlex>
       <CStack
-        v-if="!request.data"
+        v-if="!request.success"
         justify="center"
         direction="column"
         align="center"
@@ -35,7 +35,7 @@
         <CFormControl
           text-align="center"
           max-w="80%"
-          :is-invalid="request.success === false"
+          :is-invalid="request.error != null"
         >
           <CFormLabel for="url">your url</CFormLabel>
           <CInput
@@ -186,6 +186,9 @@ export default {
           })
         })
         const data = await results.json()
+
+        if(data.error) throw new Error(data.error)
+        
         this.request.data = data
         this.request.loading = false
         this.request.success = true
