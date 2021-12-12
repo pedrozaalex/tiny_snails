@@ -37,7 +37,7 @@
           max-w="80%"
           :is-invalid="request.error != null"
         >
-          <CFormLabel for="url">your url</CFormLabel>
+          <CFormLabel for="url">your url:</CFormLabel>
           <CInput
             id="url"
             v-model="url"
@@ -48,7 +48,7 @@
             focus-border-color="indigo.100"
           />
           <br />
-          <CFormLabel for="slug">shortened url</CFormLabel>
+          <CFormLabel for="slug">shortened url:</CFormLabel>
           <CInputGroup>
             <CInputLeftAddon color="orange.300">
               {{ $config.baseURL }}/
