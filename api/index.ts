@@ -14,6 +14,20 @@ app.use('/hello', hello);
 app.use('/snails', snails);
 app.use('/owners', owners);
 
+app.use(
+  (
+    err: { message: any; stack: any },
+    _req: any,
+    res: { json: (arg0: { message: any; stack: any }) => void },
+    _next: any
+  ) => {
+    res.json({
+      message: err.message,
+      stack: process.env.NODE_ENV === 'production' ? '🥞' : err.stack
+    });
+  }
+);
+
 export default {
   path: '/api',
   handler: app

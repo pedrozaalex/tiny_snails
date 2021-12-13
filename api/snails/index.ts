@@ -1,5 +1,7 @@
 import { Router } from 'express';
 import faunadb from 'faunadb';
+import { string, object } from 'yup';
+import generateRandomSlug from '../generateRandomSlug';
 import jwtCheck from '../jwtCheck';
 
 const router = Router();
@@ -7,26 +9,6 @@ const faunaClient = new faunadb.Client({
   secret: process.env.FAUNA_SECRET_KEY ?? ''
 });
 const q = faunadb.query;
-
-const generateRandomSlug = async (tries: number = 0): Promise<string> => {
-  const chars = process.env.SLUG_CHARS ?? 'abcdefghijklmnopqrstuvwxyz';
-  const length = process.env.SLUG_LENGTH ?? 6;
-  const maxTries = process.env.SLUG_MAX_TRIES ?? 5;
-
-  const slugExists = async (s: string) =>
-    await faunaClient.query(q.Exists(q.Match(q.Index('aliases'), s)));
-
-  const slug = [...Array(length).keys()]
-    .map(() => chars[Math.floor(Math.random() * chars.length)])
-    .join('');
-
-  const exists = await slugExists(slug);
-
-  if (!exists) return slug;
-  else if (tries < maxTries) return generateRandomSlug(tries + 1);
-
-  throw new Error('Could not generate unique slug');
-};
 
 // return 100 most popular urls for leaderboard
 router.get('/', async (_req, _res, _next) => {
@@ -42,24 +24,32 @@ router.get('/', async (_req, _res, _next) => {
     });
     _res.json(result);
   } catch (error) {
-    console.log('could not get urls', error);
-    _res.json({ error: 'error' });
+    _res.json(error);
   }
 });
 
+const schema = object().shape({
+  owner: string().trim(),
+  url: string().trim().url().required(),
+  alias: string().trim().matches(/[\w-]/i)
+});
 // create a new shortened url
 router.post('/', async (req, res, _next) => {
-  const url = req.body.url;
-  const alias = req.body.slug || (await generateRandomSlug());
-  const owner = req.body.owner || '';
+  const { owner, url, alias } = req.body;
+
+  try {
+    await schema.validate({ owner, url, alias });
+  } catch (error) {
+    return res.status(400).json({ error: 'invalid data' });
+  }
 
   // TODO auto generate sdk from fauna so we don't have to do "any"
   const { data }: any = await faunaClient.query(
     q.Create(q.Collection('snails'), {
       data: {
-        alias,
         url,
-        owner,
+        owner: owner ?? '',
+        alias: alias ?? generateRandomSlug(),
         clicks: 0
       }
     })

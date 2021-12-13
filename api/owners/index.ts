@@ -16,16 +16,10 @@ router.get('/', jwtCheck, async (req: any, res) => {
         q.Lambda('alias', q.Get(q.Var('alias')))
       )
     );
-    console.log('docs: ', docs);
     res.status(200).send(docs.data);
   } catch (error) {
-    console.log('error: ', error);
     res.status(400).send(error);
   }
-
-  //   console.log('docs', docs);
-
-  //   res.json(docs?.data);
 });
 
 export default router;

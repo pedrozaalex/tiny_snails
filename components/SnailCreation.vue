@@ -115,7 +115,10 @@ export default {
         this.request.success = true;
         this.$emit('request-sucess', data);
       } catch (error) {
-        this.request.error = error;
+        if (error.response?.status === 400)
+          this.request.error = 'invalid url or alias';
+        else this.request.error = error;
+
         this.request.loading = false;
       }
     }
