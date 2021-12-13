@@ -11,7 +11,10 @@
     >
       <Header />
 
-      <snail-input v-if="!requestData" @request-sucess="requestData = $event" />
+      <snail-creation
+        v-if="!requestData"
+        @request-sucess="requestData = $event"
+      />
       <snail-display v-else :snail="requestData" />
 
       <Footer />

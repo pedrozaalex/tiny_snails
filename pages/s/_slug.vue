@@ -5,14 +5,11 @@
 <script>
 import axios from 'axios';
 export default {
-  async fetch({ params: { slug }, redirect }) {
-    console.log('fetch: ', slug);
+  async fetch({ params: { slug }, redirect, $config }) {
     try {
-      const { data } = await axios.get(`/api/snails/${slug}`);
-      console.log('data:', data);
+      const { data } = await axios.get(`${$config.baseURL}/api/snails/${slug}`);
       return redirect(data.url);
     } catch (error) {
-      console.log('error:', error);
       return redirect('/404');
     }
   },

@@ -37,11 +37,25 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
-    // https://go.nuxtjs.dev/chakra
     '@chakra-ui/nuxt',
-    // https://go.nuxtjs.dev/emotion
-    '@nuxtjs/emotion'
+    '@nuxtjs/emotion',
+    '@nuxtjs/axios',
+    '@nuxtjs/auth-next'
   ],
+
+  auth: {
+    redirect: {
+      login: '/',
+      logout: '/'
+    },
+    strategies: {
+      auth0: {
+        domain: 'dev-vz68qmuc.us.auth0.com',
+        clientId: '1PnxykiF5ILPFMoMdFLkCJhN5gGmXT4g',
+        audience: 'https://tny-snls.xyz/api/'
+      }
+    }
+  },
 
   publicRuntimeConfig: {
     baseURL: process.env.BASE_URL,

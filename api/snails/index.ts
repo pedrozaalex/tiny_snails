@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import faunadb from 'faunadb';
+import jwtCheck from '../jwtCheck';
 
 const router = Router();
 const faunaClient = new faunadb.Client({
@@ -37,6 +38,7 @@ router.get('/', (_req, _res, _next) => {
 router.post('/', async (req, res, _next) => {
   const url = req.body.url;
   const alias = req.body.slug || (await generateRandomSlug());
+  const owner = req.body.owner || '';
 
   // TODO auto generate sdk from fauna so we don't have to do "any"
   const { data }: any = await faunaClient.query(
@@ -44,6 +46,7 @@ router.post('/', async (req, res, _next) => {
       data: {
         alias,
         url,
+        owner,
         clicks: 0
       }
     })
@@ -54,6 +57,7 @@ router.post('/', async (req, res, _next) => {
 
 // get the url for a given alias
 router.get('/:alias', async (req, res, _next) => {
+  console.log('getting url for alias: ', req.params.alias);
   const alias = req.params.alias;
   const doc: any = await faunaClient.query(
     q.Get(q.Match(q.Index('aliases'), alias))
@@ -64,6 +68,22 @@ router.get('/:alias', async (req, res, _next) => {
   );
 
   res.json(doc.data);
+});
+
+// destroy a shortened url
+router.delete('/:alias', jwtCheck, async (req: any, res, _next) => {
+  const alias = req.params.alias;
+  const doc: any = await faunaClient.query(
+    q.Get(q.Match(q.Index('aliases'), alias))
+  );
+
+  if (doc.data.owner === req.user.sub) {
+    await faunaClient.query(q.Delete(q.Ref(doc.ref)));
+
+    res.json({ success: true });
+  } else {
+    res.status(403).json({ success: false, error: 'not authorized' });
+  }
 });
 
 export default router;

@@ -106,7 +106,8 @@ export default {
       try {
         const result = await axios.post(`${this.$config.baseURL}/api/snails`, {
           url,
-          slug
+          slug,
+          owner: this.$auth.loggedIn ? this.$auth.user.sub : null
         });
         const { data } = result;
         this.request.loading = false;
