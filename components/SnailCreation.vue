@@ -124,7 +124,6 @@ export default {
           params
         );
         const { data } = result;
-        console.log('data => ', data);
         this.request.loading = false;
         this.request.success = true;
         this.$emit('request-sucess', data);
