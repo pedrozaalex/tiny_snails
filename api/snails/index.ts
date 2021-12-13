@@ -30,17 +30,17 @@ const generateRandomSlug = async (tries: number = 0): Promise<string> => {
 
 // return 100 most popular urls for leaderboard
 router.get('/', async (_req, _res, _next) => {
-  // _res.json(urls.sort((a, b) => b.clicks - a.clicks).slice(0, 100));
-  // _res.json({ error: 'not implemented' });
   try {
-    const { data }: any = await faunaClient.query(
-      q.Map(
-        q.Paginate(q.Match(q.Index('aliases_by_clicks'))),
-        q.Lambda('alias', q.Get(q.Var('alias')))
-      )
+    const query: any = await faunaClient.query(
+      q.Paginate(q.Match(q.Index('top_aliases_by_clicks')))
     );
-    console.log(data);
-    _res.json(data);
+    const result = query.data.map((item: any) => {
+      return {
+        clicks: item[0],
+        alias: item[1]
+      };
+    });
+    _res.json(result);
   } catch (error) {
     console.log('could not get urls', error);
     _res.json({ error: 'error' });
@@ -70,7 +70,6 @@ router.post('/', async (req, res, _next) => {
 
 // get the url for a given alias
 router.get('/:alias', async (req, res, _next) => {
-  console.log('getting url for alias: ', req.params.alias);
   const alias = req.params.alias;
   const doc: any = await faunaClient.query(
     q.Get(q.Match(q.Index('aliases'), alias))
