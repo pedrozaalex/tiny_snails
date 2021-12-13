@@ -29,9 +29,9 @@ router.get('/', async (_req, _res, _next) => {
 });
 
 const schema = object().shape({
-  owner: string().trim(),
-  url: string().trim().url().required(),
-  alias: string().trim().matches(/[\w-]/i)
+  owner: string().trim().nullable(),
+  url: string().trim().url().required().nullable(),
+  alias: string().trim().matches(/[\w-]/i).nullable().min(3).max(20)
 });
 // create a new shortened url
 router.post(
@@ -43,6 +43,7 @@ router.post(
     try {
       await schema.validate({ owner, url, alias });
     } catch (error) {
+      console.log(error);
       return res.status(400).json({ error: 'invalid data' });
     }
 
