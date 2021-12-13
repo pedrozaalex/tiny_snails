@@ -15,7 +15,7 @@
       align-items="baseline"
       w="fit-content"
     >
-      <CText mr="2"> {{ $config.baseURL }}/{{ snail.alias }} </CText>
+      <CText mr="2"> {{ $config.baseURL }}/s/{{ snail.alias }} </CText>
       <CButton variant-color="indigo" p="1" @click="copyUrl"> 📋 </CButton>
     </CFlex>
   </CFlex>
@@ -34,7 +34,7 @@ export default {
   },
   methods: {
     copyUrl() {
-      const textToCopy = `${this.$config.baseURL}/${this.snail.alias}`;
+      const textToCopy = `${this.$config.baseURL}/s/${this.snail.alias}`;
       if (navigator.clipboard) {
         navigator.clipboard
           .writeText(textToCopy)
