@@ -29,9 +29,22 @@ const generateRandomSlug = async (tries: number = 0): Promise<string> => {
 };
 
 // return 100 most popular urls
-router.get('/', (_req, _res, _next) => {
+router.get('/', async (_req, _res, _next) => {
   // _res.json(urls.sort((a, b) => b.clicks - a.clicks).slice(0, 100));
-  _res.json({ error: 'not implemented' });
+  // _res.json({ error: 'not implemented' });
+  try {
+    const { data }: any = await faunaClient.query(
+      q.Map(
+        q.Paginate(q.Match(q.Index('aliases_by_clicks'))),
+        q.Lambda('alias', q.Get(q.Var('alias')))
+      )
+    );
+    console.log(data);
+    _res.json(data);
+  } catch (error) {
+    console.log('could not get urls', error);
+    _res.json({ error: 'error' });
+  }
 });
 
 // create a new shortened url

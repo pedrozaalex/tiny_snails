@@ -16,7 +16,10 @@
       </CFlex>
     </CHeading>
     <nav>
-      <CFlex align="center">
+      <CFlex align="center" class="navLinks">
+        <!-- Leaderboard -->
+        <CLink as="nuxt-link" to="/leaderboard">leaderboard</CLink>
+
         <!-- Unlogged user -->
         <CLink v-if="!$auth.loggedIn" mr="2" @click="$auth.loginWith('auth0')">
           sign in
@@ -54,6 +57,9 @@ export default {
   }
 };
 </script>
-
 <style>
+.navLinks a {
+  padding-right: 0.5rem;
+  padding-left: 0.5rem;
+}
 </style>

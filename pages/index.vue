@@ -4,7 +4,9 @@
       v-if="!requestData"
       @request-sucess="requestData = $event"
     />
-    <snail-display v-else :snail="requestData" />
+    <CBox v-else>
+      <snail-display :snail="requestData" @reset="requestData = null" />
+    </CBox>
   </div>
 </template>
 
