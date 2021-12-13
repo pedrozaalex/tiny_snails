@@ -1,19 +1,13 @@
 import jwt from 'express-jwt';
 import jwks from 'jwks-rsa';
 
-type props = { credentialsRequired: boolean };
-
 /**
  *  Returns a middleware function that will check the authorization header
  * The middleware will call next() if the authorization header is valid
  * If credentialsRequired is set to false, the middleware will call next(),
  * even if the authorization header is not present
  * */
-const jwtCheck = (
-  { credentialsRequired }: props = {
-    credentialsRequired: true
-  }
-) =>
+const jwtCheck = (credentialsRequired = true) =>
   jwt({
     secret: jwks.expressJwtSecret({
       cache: true,

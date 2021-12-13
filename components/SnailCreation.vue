@@ -105,11 +105,19 @@ export default {
       const slug = this.inputSlug;
 
       try {
-        const result = await axios.post(`${this.$config.baseURL}/api/snails`, {
-          url,
-          slug,
-          owner: this.$auth.loggedIn ? this.$auth.user.sub : null
-        });
+        const token = await this.$auth.strategy.token.get();
+        const result = await axios.post(
+          `${this.$config.baseURL}/api/snails`,
+          {
+            url,
+            slug: slug || null
+          },
+          {
+            headers: {
+              Authorization: token
+            }
+          }
+        );
         const { data } = result;
         this.request.loading = false;
         this.request.success = true;

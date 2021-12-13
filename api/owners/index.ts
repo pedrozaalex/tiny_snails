@@ -8,6 +8,7 @@ const faunaClient = new faunadb.Client({
 });
 const q = faunadb.query;
 
+// returns all of an owner's snails
 router.get('/', jwtCheck(), async (req: any, res) => {
   try {
     const docs: any = await faunaClient.query(

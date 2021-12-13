@@ -33,35 +33,32 @@ const schema = object().shape({
   url: string().trim().url().required().nullable(),
   alias: string().trim().matches(/[\w-]/i).nullable().min(3).max(20)
 });
+
 // create a new shortened url
-router.post(
-  '/',
-  jwtCheck({ credentialsRequired: false }),
-  async (req, res, _next) => {
-    const { owner, url, alias } = req.body;
+router.post('/', jwtCheck(false), async (req: any, res, _next) => {
+  const { url, slug: alias } = req.body;
+  const owner = req.user?.sub ?? null;
 
-    try {
-      await schema.validate({ owner, url, alias });
-    } catch (error) {
-      console.log(error);
-      return res.status(400).json({ error: 'invalid data' });
-    }
-
-    // TODO auto generate sdk from fauna so we don't have to do "any"
-    const { data }: any = await faunaClient.query(
-      q.Create(q.Collection('snails'), {
-        data: {
-          url,
-          owner: owner ?? '',
-          alias: alias ?? (await generateRandomSlug()),
-          clicks: 0
-        }
-      })
-    );
-
-    res.json(data);
+  try {
+    await schema.validate({ owner, url, alias });
+  } catch (error) {
+    return res.status(400).json({ error: 'invalid data' });
   }
-);
+
+  // TODO auto generate sdk from fauna so we don't have to do "any"
+  const { data }: any = await faunaClient.query(
+    q.Create(q.Collection('snails'), {
+      data: {
+        url,
+        owner: owner ?? '',
+        alias: alias ?? (await generateRandomSlug()),
+        clicks: 0
+      }
+    })
+  );
+
+  res.json(data);
+});
 
 // get the url for a given alias
 router.get('/:alias', async (req, res, _next) => {
