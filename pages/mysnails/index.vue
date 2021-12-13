@@ -42,17 +42,14 @@ export default {
           Authorization: token // send the access token through the 'Authorization' header
         }
       });
-      console.log('result: ', result);
       this.mySnails = result.data.map((s) => s.data);
       this.loading = false;
     } catch (error) {
-      console.error('error: ', error);
       this.error = error;
     }
   },
   methods: {
     deleteSnail(snail) {
-      console.log('deleteSnail: ', snail);
       this.mySnails = this.mySnails.filter((s) => s.alias !== snail.alias);
     }
   },

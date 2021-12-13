@@ -50,7 +50,7 @@ export default {
         });
         this.$emit('deleted', this.snail);
       } catch (error) {
-        console.error(error);
+        alert(error.response.data.message);
       } finally {
         this.loading = false;
       }
