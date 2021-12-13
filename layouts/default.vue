@@ -4,7 +4,9 @@
       <CColorModeProvider>
         <CBox font-family="body" as="main">
           <CReset />
-          <Nuxt />
+          <app-body>
+            <Nuxt />
+          </app-body>
         </CBox>
       </CColorModeProvider>
     </CThemeProvider>
@@ -17,6 +19,7 @@ import {
   CReset,
   CBox
 } from '@chakra-ui/vue';
+import AppBody from '~/components/AppBody.vue';
 
 export default {
   name: 'App',
@@ -24,7 +27,8 @@ export default {
     CThemeProvider,
     CColorModeProvider,
     CReset,
-    CBox
+    CBox,
+    AppBody
   }
 };
 </script>
