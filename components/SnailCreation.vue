@@ -4,6 +4,8 @@
       text-align="center"
       max-w="80%"
       :is-invalid="request.error != null"
+      @submit="createSnail"
+      @keyup.enter="createSnail"
     >
       <CFormLabel for="url">your url:</CFormLabel>
       <CInput
@@ -14,11 +16,11 @@
         aria-placeholder="URL to shorten"
         placeholder="URL to shorten"
         focus-border-color="indigo.100"
-        @keyup.enter="onSubmit"
+        @keyup.enter="createSnail"
       />
       <br />
       <CFormLabel for="slug">shortened url:</CFormLabel>
-      <CInputGroup>
+      <CInputGroup @keyup.enter="createSnail">
         <CInputLeftAddon color="orange.300">
           {{ $config.baseURL }}/s/
         </CInputLeftAddon>
@@ -31,7 +33,7 @@
           focus-border-color="indigo.100"
           rounded-left="0"
           error-border-color="crimson"
-          @keyup.enter="onSubmit"
+          @keyup.enter="createSnail"
         />
       </CInputGroup>
       <CFormHelperText id="slug-helper-text">
@@ -46,7 +48,7 @@
         variant-color="indigo"
         :is-loading="request.loading"
         font-weight="bold"
-        @click="onSubmit"
+        @click="createSnail"
       >
         shorten it!</CButton
       >
@@ -95,7 +97,7 @@ export default {
   },
   methods: {
     // send the data from the form to the server
-    async onSubmit() {
+    async createSnail() {
       this.request.loading = true;
       this.request.error = null;
       this.request.success = null;
@@ -105,20 +107,24 @@ export default {
       const slug = this.inputSlug;
 
       try {
-        const token = await this.$auth.strategy.token.get();
+        const token = (await this.$auth.strategy.token.get()) || null;
+        const body = {
+          url,
+          slug: slug || null
+        };
+        const params = {};
+        if (this.$auth.loggedIn)
+          params.headers = {
+            Authorization: token
+          };
+
         const result = await axios.post(
           `${this.$config.baseURL}/api/snails`,
-          {
-            url,
-            slug: slug || null
-          },
-          {
-            headers: {
-              Authorization: token
-            }
-          }
+          body,
+          params
         );
         const { data } = result;
+        console.log('data => ', data);
         this.request.loading = false;
         this.request.success = true;
         this.$emit('request-sucess', data);
