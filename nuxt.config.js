@@ -20,11 +20,28 @@ export default {
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
   },
 
+  googleFonts: {
+    families: {
+      Raleway: [400, 700]
+    }
+  },
+
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [],
+
+  chakra: {
+    extendTheme: {
+      fonts: {
+        heading: 'Raleway, sans-serif',
+        body: 'Raleway, sans-serif',
+        anchor: 'Raleway, sans-serif',
+        text: 'Raleway, sans-serif'
+      }
+    }
+  },
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -32,7 +49,8 @@ export default {
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
     // https://go.nuxtjs.dev/typescript
-    '@nuxt/typescript-build'
+    '@nuxt/typescript-build',
+    '@nuxtjs/google-fonts'
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules

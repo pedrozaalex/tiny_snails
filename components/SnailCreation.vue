@@ -45,6 +45,7 @@
         mt="2"
         variant-color="indigo"
         :is-loading="request.loading"
+        font-weight="bold"
         @click="onSubmit"
       >
         shorten it!</CButton
