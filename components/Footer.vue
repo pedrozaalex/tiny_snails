@@ -2,7 +2,7 @@
   <footer>
     <CBox pos="absolute" bottom="0" w="100%" p="2">
       <CText text-align="center">
-        Made with 💜 by
+        made with 💜 by
         <CLink
           class="nameLink"
           href="https://github.com/pedrozaalex"

@@ -8,7 +8,9 @@
     justify-content="center"
     position="relative"
   >
+    <Header />
     <slot />
+    <Footer />
   </CBox>
 </template>
 
