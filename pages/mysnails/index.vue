@@ -1,11 +1,21 @@
 <template>
-  <CBox>
-    <Header />
-    <h1>snail owners page</h1>
-    <div v-for="snail in mySnails" :key="snail.alias">
-      {{ snail }}
-    </div>
-    <Footer />
+  <CBox text-align="center">
+    <CHeading v-if="!loading && mySnails.length === 0">
+      You have no snails :(
+    </CHeading>
+    <CBox v-else>
+      <CHeading>your snails:</CHeading>
+      <CSpinner v-if="loading" color="orange.300" />
+      <CBox v-else>
+        <CBox overflow-y="auto" max-height="50%" class="snailList" as="ul">
+          <snail-card
+            v-for="snail in mySnails"
+            :key="snail.alias"
+            :snail="{ ...snail, delete: 'hi' }"
+          />
+        </CBox>
+      </CBox>
+    </CBox>
   </CBox>
 </template>
 
@@ -15,7 +25,9 @@ export default {
   middleware: 'auth',
   data() {
     return {
-      mySnails: []
+      mySnails: [],
+      loading: true,
+      error: null
     };
   },
   async fetch() {
@@ -31,10 +43,27 @@ export default {
       });
       console.log('result: ', result);
       this.mySnails = result.data.map((s) => s.data);
+      this.loading = false;
     } catch (error) {
       console.error('error: ', error);
+      this.error = error;
     }
   },
   fetchOnServer: false
 };
 </script>
+
+<style scoped>
+.snailList {
+  margin: 5px auto;
+  padding: 5px;
+  max-height: 50vh;
+  width: 90%;
+  overflow: auto;
+  text-align: justify;
+  border-radius: 5px;
+  border: 1px solid rgba(204, 204, 204, 0.664);
+  background-color: #0000000e;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+}
+</style>
