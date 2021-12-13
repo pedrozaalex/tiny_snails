@@ -11,33 +11,24 @@
     >
       <Header />
 
-      <!-- v-if="!request.success" -->
       <snail-input v-if="!requestData" @request-sucess="requestData = $event" />
+      <snail-display v-else :snail="requestData" />
 
-      <CBox v-else text-align="center">
-        shortened url:
-        <CLink :href="'/' + requestData.alias">
-          {{ $config.baseURL }}/{{ requestData.alias }}
-        </CLink>
-      </CBox>
+      <Footer />
     </CBox>
   </div>
 </template>
 
-<script lang="js">
-import {
-  CBox,
-  CLink
-} from '@chakra-ui/vue'
+<script>
+import { CBox } from '@chakra-ui/vue';
 
 export default {
   name: 'App',
   components: {
-    CBox,
-    CLink
+    CBox
   },
   inject: ['$chakraColorMode'],
-  data () {
+  data() {
     return {
       showModal: false,
       mainStyles: {
@@ -50,16 +41,16 @@ export default {
           color: 'gray.900'
         }
       },
-      requestData: null,
-    }
+      requestData: null
+    };
   },
   computed: {
-    colorMode () {
-      return this.$chakraColorMode()
+    colorMode() {
+      return this.$chakraColorMode();
     },
-    theme () {
-      return this.$chakraTheme()
+    theme() {
+      return this.$chakraTheme();
     }
-  },
-}
+  }
+};
 </script>
