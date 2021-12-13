@@ -11,7 +11,8 @@
           <snail-card
             v-for="snail in mySnails"
             :key="snail.alias"
-            :snail="{ ...snail, delete: 'hi' }"
+            :snail="snail"
+            @deleted="deleteSnail($event)"
           />
         </CBox>
       </CBox>
@@ -49,11 +50,17 @@ export default {
       this.error = error;
     }
   },
+  methods: {
+    deleteSnail(snail) {
+      console.log('deleteSnail: ', snail);
+      this.mySnails = this.mySnails.filter((s) => s.alias !== snail.alias);
+    }
+  },
   fetchOnServer: false
 };
 </script>
 
-<style scoped>
+<style>
 .snailList {
   margin: 5px auto;
   padding: 5px;

@@ -48,7 +48,7 @@ export default {
             Authorization: token // send the access token through the 'Authorization' header
           }
         });
-        location.reload();
+        this.$emit('deleted', this.snail);
       } catch (error) {
         console.error(error);
       } finally {
