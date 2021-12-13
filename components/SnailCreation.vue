@@ -20,7 +20,7 @@
       <CFormLabel for="slug">shortened url:</CFormLabel>
       <CInputGroup>
         <CInputLeftAddon color="orange.300">
-          {{ $config.baseURL }}/
+          {{ $config.baseURL }}/s/
         </CInputLeftAddon>
         <CInput
           id="slug"
@@ -55,7 +55,6 @@
 
 <script>
 import axios from 'axios';
-
 import {
   CFormControl,
   CFormLabel,
