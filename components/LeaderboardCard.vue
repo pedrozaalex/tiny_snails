@@ -39,10 +39,11 @@ export default {
 }
 
 .leaderboardCard .alias {
-  width: 90%;
+  width: 75%;
 }
 
 .leaderboardCard .clicks {
-  width: 10%;
+  text-align: center;
+  width: 25%;
 }
 </style>>
