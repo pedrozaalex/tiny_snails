@@ -8,7 +8,7 @@ const faunaClient = new faunadb.Client({
 });
 const q = faunadb.query;
 
-router.get('/', jwtCheck, async (req: any, res) => {
+router.get('/', jwtCheck(), async (req: any, res) => {
   try {
     const docs: any = await faunaClient.query(
       q.Map(

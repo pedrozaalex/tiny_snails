@@ -34,29 +34,33 @@ const schema = object().shape({
   alias: string().trim().matches(/[\w-]/i)
 });
 // create a new shortened url
-router.post('/', async (req, res, _next) => {
-  const { owner, url, alias } = req.body;
+router.post(
+  '/',
+  jwtCheck({ credentialsRequired: false }),
+  async (req, res, _next) => {
+    const { owner, url, alias } = req.body;
 
-  try {
-    await schema.validate({ owner, url, alias });
-  } catch (error) {
-    return res.status(400).json({ error: 'invalid data' });
+    try {
+      await schema.validate({ owner, url, alias });
+    } catch (error) {
+      return res.status(400).json({ error: 'invalid data' });
+    }
+
+    // TODO auto generate sdk from fauna so we don't have to do "any"
+    const { data }: any = await faunaClient.query(
+      q.Create(q.Collection('snails'), {
+        data: {
+          url,
+          owner: owner ?? '',
+          alias: alias ?? generateRandomSlug(),
+          clicks: 0
+        }
+      })
+    );
+
+    res.json(data);
   }
-
-  // TODO auto generate sdk from fauna so we don't have to do "any"
-  const { data }: any = await faunaClient.query(
-    q.Create(q.Collection('snails'), {
-      data: {
-        url,
-        owner: owner ?? '',
-        alias: alias ?? generateRandomSlug(),
-        clicks: 0
-      }
-    })
-  );
-
-  res.json(data);
-});
+);
 
 // get the url for a given alias
 router.get('/:alias', async (req, res, _next) => {
@@ -73,7 +77,7 @@ router.get('/:alias', async (req, res, _next) => {
 });
 
 // destroy a shortened url
-router.delete('/:alias', jwtCheck, async (req: any, res, _next) => {
+router.delete('/:alias', jwtCheck(), async (req: any, res, _next) => {
   const alias = req.params.alias;
   const doc: any = await faunaClient.query(
     q.Get(q.Match(q.Index('aliases'), alias))
