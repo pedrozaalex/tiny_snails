@@ -23,12 +23,10 @@
         </CLink>
 
         <!-- Logged user -->
-        <CLink v-if="$auth.loggedIn" p="2" @click="$auth.logout()">
-          sign out
+        <CLink v-if="$auth.loggedIn" as="nuxt-link" to="/mysnails">
+          my snails
         </CLink>
-        <nuxt-link v-if="$auth.loggedIn" to="/mysnails">
-          <CAvatar size="md" mr="2" :src="$auth.user.picture" />
-        </nuxt-link>
+        <CLink v-if="$auth.loggedIn" @click="$auth.logout()"> sign out </CLink>
 
         <!-- Toggle dark mode -->
         <CIconButton
