@@ -28,7 +28,7 @@ const generateRandomSlug = async (tries: number = 0): Promise<string> => {
   throw new Error('Could not generate unique slug');
 };
 
-// return 100 most popular urls
+// return 100 most popular urls for leaderboard
 router.get('/', async (_req, _res, _next) => {
   // _res.json(urls.sort((a, b) => b.clicks - a.clicks).slice(0, 100));
   // _res.json({ error: 'not implemented' });

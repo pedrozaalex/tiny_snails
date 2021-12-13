@@ -18,7 +18,7 @@
       @click="deleteSnail"
     >
       <div v-if="loading"><CSpinner size="sm" /></div>
-      <div v-else>X</div>
+      <div v-else><CIcon name="close" /></div>
     </CButton>
   </CStack>
 </template>
