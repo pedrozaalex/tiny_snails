@@ -1,3 +1,3 @@
 <template>
-  <p>Signing in...</p>
+  <CBox text-align="center">Signing in...</CBox>
 </template>
