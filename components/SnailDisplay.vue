@@ -1,6 +1,6 @@
 <template>
   <CFlex direction="column" align="center">
-    <CHeading>Success!</CHeading>
+    <CHeading>success!</CHeading>
 
     <CText> your shortened url: </CText>
 
@@ -18,6 +18,7 @@
       <CText mr="2"> {{ $config.baseURL }}/s/{{ snail.alias }} </CText>
       <CButton variant-color="indigo" p="1" @click="copyUrl"> 📋 </CButton>
     </CFlex>
+    <CLink as="div" @click="reset">create another one</CLink>
   </CFlex>
 </template>
 
@@ -33,6 +34,9 @@ export default {
     }
   },
   methods: {
+    reset() {
+      this.$emit('reset');
+    },
     copyUrl() {
       const textToCopy = `${this.$config.baseURL}/s/${this.snail.alias}`;
       if (navigator.clipboard) {
