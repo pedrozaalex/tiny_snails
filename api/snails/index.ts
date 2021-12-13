@@ -52,7 +52,7 @@ router.post(
         data: {
           url,
           owner: owner ?? '',
-          alias: alias ?? generateRandomSlug(),
+          alias: alias ?? (await generateRandomSlug()),
           clicks: 0
         }
       })
