@@ -1,9 +1,9 @@
 <template>
   <CStack is-inline spacing="5" class="leaderboardCard" as="li">
     <CBox class="alias">
-      <CLink :href="$config.baseURL + '/s/' + snail.alias">{{
-        snail.alias
-      }}</CLink>
+      <CLink :href="$config.baseURL + '/s/' + snail.alias">
+        {{ snail.alias }}
+      </CLink>
     </CBox>
     <CBox class="clicks">
       {{ snail.clicks }}
