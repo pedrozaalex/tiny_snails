@@ -1,5 +1,5 @@
 <template>
-  <CStack justify="center" direction="column" align="center">
+  <CStack justify="center" direction="column" align="center" h="100%">
     <CFormControl
       text-align="center"
       max-w="80%"
@@ -69,6 +69,12 @@ import {
   CButton,
   CFormErrorMessage
 } from '@chakra-ui/vue';
+import { string, object } from 'yup';
+
+const schema = object().shape({
+  url: string().url().required(),
+  slug: string().optional()
+});
 
 export default {
   name: 'App',
@@ -128,7 +134,8 @@ export default {
 
         this.request.loading = false;
         this.request.success = true;
-        this.$emit('request-sucess', data);
+
+        this.$emit('snail-created', data);
       } catch (error) {
         if (error.response?.status === 400)
           this.request.error = 'invalid url or alias';

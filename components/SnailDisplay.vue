@@ -1,5 +1,5 @@
 <template>
-  <CFlex direction="column" align="center">
+  <CFlex direction="column" align="center" justify="center" h="100%">
     <CHeading>success!</CHeading>
 
     <CText> your shortened url: </CText>

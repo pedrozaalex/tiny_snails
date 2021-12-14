@@ -1,9 +1,10 @@
 <template>
   <CBox
     v-bind="mainStyles[colorMode]"
+    class="appBody"
     d="flex"
-    w="100vw"
-    h="100vh"
+    w="100%"
+    h="100%"
     flex-dir="column"
     justify-content="center"
     position="relative"
@@ -41,6 +42,3 @@ export default {
   }
 };
 </script>
-
-<style>
-</style>

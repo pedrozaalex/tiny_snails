@@ -32,3 +32,18 @@ export default {
   }
 };
 </script>
+
+<style>
+html,
+body,
+#__nuxt,
+#__layout,
+.container,
+#__chakra-app {
+  height: 100%; /* Allow percentage-based heights in the application */
+}
+
+main {
+  height: 100%;
+}
+</style>
