@@ -98,16 +98,21 @@ export default {
   methods: {
     // send the data from the form to the server
     async createSnail() {
+      const url = this.inputUrl;
+      const slug = this.inputSlug;
+
+      try {
+        await schema.validate({ url, slug }, { abortEarly: false });
+      } catch (error) {
+        this.request.error = error.errors.join(', ');
+      }
+
       this.request.loading = true;
       this.request.error = null;
       this.request.success = null;
       this.request.data = null;
 
-      const url = this.inputUrl;
-      const slug = this.inputSlug;
-
       try {
-        const token = (await this.$auth.strategy.token.get()) || null;
         const body = {
           url,
           slug: slug || null
@@ -115,7 +120,8 @@ export default {
         const params = {};
         if (this.$auth.loggedIn)
           params.headers = {
-            Authorization: token
+            // note: the token already has the Bearer prefix
+            Authorization: await this.$auth.strategy.token.get()
           };
 
         const { data } = await axios.post('/api/snails', body, params);
@@ -126,7 +132,7 @@ export default {
       } catch (error) {
         if (error.response?.status === 400)
           this.request.error = 'invalid url or alias';
-        else this.request.error = error;
+        else this.request.error = 'something went wrong';
 
         this.request.loading = false;
       }

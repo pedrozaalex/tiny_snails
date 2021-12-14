@@ -46,18 +46,24 @@ router.post('/', jwtCheck(false), async (req: any, res, _next) => {
   }
 
   // TODO auto generate sdk from fauna so we don't have to do "any"
-  const { data }: any = await faunaClient.query(
-    q.Create(q.Collection('snails'), {
-      data: {
-        url,
-        owner: owner ?? '',
-        alias: alias ?? (await generateRandomSlug()),
-        clicks: 0
-      }
-    })
-  );
+  try {
+    const { data }: any = await faunaClient.query(
+      q.Create(q.Collection('snails'), {
+        data: {
+          url,
+          owner: owner ?? '',
+          alias: alias ?? (await generateRandomSlug()),
+          clicks: 0
+        }
+      })
+    );
+    res.json(data);
+  } catch (error: any) {
+    if (error.requestResult?.statusCode === 400)
+      return res.status(400).json({ error: 'alias already exists' });
 
-  res.json(data);
+    return res.status(500).json({ error });
+  }
 });
 
 // get the url for a given alias
