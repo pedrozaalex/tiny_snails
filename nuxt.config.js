@@ -2,6 +2,10 @@ export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: 'server',
 
+  server: {
+    host: '0'
+  },
+
   serverMiddleware: {
     '/api': '~/api'
   },

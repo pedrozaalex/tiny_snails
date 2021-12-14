@@ -118,12 +118,8 @@ export default {
             Authorization: token
           };
 
-        const result = await axios.post(
-          `${this.$config.baseURL}/api/snails`,
-          body,
-          params
-        );
-        const { data } = result;
+        const { data } = await axios.post('/api/snails', body, params);
+
         this.request.loading = false;
         this.request.success = true;
         this.$emit('request-sucess', data);

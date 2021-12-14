@@ -41,7 +41,7 @@ export default {
   },
   methods: {
     async fetchSnails() {
-      const { data } = await axios.get(`${this.$config.baseURL}/api/snails`);
+      const { data } = await axios.get('/api/snails');
       this.mySnails = data;
       this.loading = false;
     }
