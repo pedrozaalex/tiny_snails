@@ -1,7 +1,6 @@
 <template>
   <CBox text-align="center">
-    <CSpinner v-if="loading" color="orange.300" />
-    <CFlex v-else direction="column" align="center">
+    <CFlex direction="column" align="center">
       <CHeading
         >top snails <CImage src="trophy.png" ml="1" d="inline-block" size="10"
       /></CHeading>
@@ -15,13 +14,22 @@
         <CText>alias</CText>
         <CText>clicks</CText>
       </CFlex>
-      <CBox overflow-y="auto" max-height="50%" class="leaderboard" as="ul">
+      <CFlex
+        overflow-y="auto"
+        height="50vh"
+        class="leaderboard"
+        as="ul"
+        direction="column"
+      >
+        <CSpinner v-if="loading" color="orange.300" margin="auto" />
+
         <leaderboard-card
           v-for="snail in mySnails"
+          v-else
           :key="snail.alias"
           :snail="snail"
         />
-      </CBox>
+      </CFlex>
     </CFlex>
   </CBox>
 </template>
@@ -69,5 +77,31 @@ div {
 
 .leaderboardHeader {
   width: var(--leaderboard-width);
+}
+
+@media only screen and (max-width: 1100px) {
+  .leaderboard {
+    --leaderboard-width: 40vw;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .leaderboard {
+    --leaderboard-width: 60vw;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .leaderboard {
+    --leaderboard-width: 75vw;
+  }
+}
+
+@media only screen and (max-width: 350px) {
+  .leaderboard {
+    --leaderboard-width: 100vw;
+    border-radius: 0;
+    border: none;
+  }
 }
 </style>
