@@ -19,7 +19,7 @@ router.get('/', jwtCheck(), async (req: any, res) => {
     );
     res.status(200).send(docs.data);
   } catch (error) {
-    res.status(400).send(error);
+    res.status(400).send("Couldn't find your snails :(");
   }
 });
 
