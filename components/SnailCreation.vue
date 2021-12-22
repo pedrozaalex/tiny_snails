@@ -1,5 +1,5 @@
 <template>
-  <CStack justify="center" direction="column" align="center" h="100%">
+  <CFlex justify="center" direction="column" align="center" h="100%">
     <CFormControl
       text-align="center"
       max-w="80%"
@@ -53,22 +53,11 @@
         shorten it!</CButton
       >
     </CFormControl>
-  </CStack>
+  </CFlex>
 </template>
 
 <script>
 import axios from 'axios';
-import {
-  CFormControl,
-  CFormLabel,
-  CInput,
-  CFormHelperText,
-  CInputLeftAddon,
-  CInputGroup,
-  CStack,
-  CButton,
-  CFormErrorMessage
-} from '@chakra-ui/vue';
 import { string, object } from 'yup';
 
 const schema = object().shape({
@@ -78,17 +67,6 @@ const schema = object().shape({
 
 export default {
   name: 'App',
-  components: {
-    CFormControl,
-    CFormLabel,
-    CInput,
-    CFormHelperText,
-    CInputLeftAddon,
-    CInputGroup,
-    CStack,
-    CButton,
-    CFormErrorMessage
-  },
   data() {
     return {
       inputUrl: '',

@@ -16,11 +16,6 @@
   </footer>
 </template>
 
-<script>
-import { CBox, CStack, CText, CLink } from '@chakra-ui/vue';
-export default { CBox, CStack, CText, CLink };
-</script>
-
 <style>
 .nameLink {
   text-decoration: underline;
@@ -28,5 +23,6 @@ export default { CBox, CStack, CText, CLink };
 .nameLink:hover {
   text-decoration: none;
   background-color: #7425f3;
+  color: #fff;
 }
 </style>
