@@ -1,13 +1,6 @@
 <template>
-  <CFlex
-    justify="space-between"
-    pos="absolute"
-    top="0"
-    w="100%"
-    p="3"
-    z-index="1"
-  >
-    <CHeading text>
+  <CFlex justify="space-between" pos="absolute" top="0" w="100%" p="3">
+    <CHeading>
       <CFlex align="flex-start">
         <nuxt-link to="/">
           tiny snails
@@ -18,18 +11,32 @@
     <nav>
       <CFlex align="center" class="navLinks">
         <!-- Leaderboard -->
-        <CLink as="nuxt-link" to="/leaderboard">leaderboard</CLink>
+        <CLink as="nuxt-link" to="/leaderboard" class="leaderboard"
+          >leaderboard</CLink
+        >
 
         <!-- Unlogged user -->
-        <CLink v-if="!$auth.loggedIn" mr="2" @click="$auth.loginWith('auth0')">
+        <CLink
+          v-if="!$auth.loggedIn"
+          mr="2"
+          class="signin"
+          @click="$auth.loginWith('auth0')"
+        >
           sign in
         </CLink>
 
         <!-- Logged user -->
-        <CLink v-if="$auth.loggedIn" as="nuxt-link" to="/mysnails">
+        <CLink
+          v-if="$auth.loggedIn"
+          as="nuxt-link"
+          to="/mysnails"
+          class="mysnails"
+        >
           my snails
         </CLink>
-        <CLink v-if="$auth.loggedIn" @click="$auth.logout()"> sign out </CLink>
+        <CLink v-if="$auth.loggedIn" class="signout" @click="$auth.logout()">
+          sign out
+        </CLink>
 
         <!-- Toggle dark mode -->
         <CIconButton
@@ -40,6 +47,68 @@
           @click="toggleColorMode"
         />
       </CFlex>
+
+      <!-- drawer for mobile -->
+      <CIconButton
+        id="drawerButton"
+        icon="chevron-left"
+        aria-label="Open drawer"
+        @click="openDrawer"
+      />
+      <CDrawer
+        :is-open="isDrawerOpen"
+        placement="right"
+        :on-close="closeDrawer"
+      >
+        <CDrawerOverlay />
+        <CDrawerContent max-width="60vw">
+          <CDrawerCloseButton />
+          <CDrawerBody>
+            <CStack direction="column" spacing="5" align="start">
+              <!-- Toggle dark mode -->
+              <CIconButton
+                :icon="colorMode === 'light' ? 'moon' : 'sun'"
+                :aria-label="`Switch to ${
+                  colorMode === 'light' ? 'dark' : 'light'
+                } mode`"
+                @click="toggleColorMode"
+              />
+
+              <!-- Leaderboard -->
+              <CLink as="nuxt-link" to="/leaderboard" class="leaderboard"
+                >leaderboard</CLink
+              >
+
+              <!-- Unlogged user -->
+              <CLink
+                v-if="!$auth.loggedIn"
+                mr="2"
+                class="signin"
+                @click="$auth.loginWith('auth0')"
+              >
+                sign in
+              </CLink>
+
+              <!-- Logged user -->
+              <CLink
+                v-if="$auth.loggedIn"
+                as="nuxt-link"
+                to="/mysnails"
+                class="mysnails"
+              >
+                my snails
+              </CLink>
+              <CLink
+                v-if="$auth.loggedIn"
+                class="signout"
+                @click="$auth.logout()"
+              >
+                sign out
+              </CLink>
+            </CStack>
+          </CDrawerBody>
+        </CDrawerContent>
+      </CDrawer>
     </nav>
   </CFlex>
 </template>
@@ -47,6 +116,11 @@
 <script>
 export default {
   inject: ['$chakraColorMode', '$toggleColorMode'],
+  data() {
+    return {
+      isDrawerOpen: false
+    };
+  },
   computed: {
     toggleColorMode() {
       return this.$toggleColorMode;
@@ -54,12 +128,32 @@ export default {
     colorMode() {
       return this.$chakraColorMode();
     }
+  },
+  methods: {
+    openDrawer() {
+      this.isDrawerOpen = true;
+    },
+    closeDrawer() {
+      this.isDrawerOpen = false;
+    }
   }
 };
 </script>
-<style>
+<style scoped>
 .navLinks a {
   padding-right: 0.5rem;
   padding-left: 0.5rem;
+}
+#drawerButton {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  .navLinks {
+    display: none;
+  }
+  #drawerButton {
+    display: block;
+  }
 }
 </style>
