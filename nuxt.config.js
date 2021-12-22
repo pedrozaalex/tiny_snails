@@ -26,7 +26,7 @@ export default {
 
   googleFonts: {
     families: {
-      Raleway: [400, 700]
+      Poppins: [400, 700]
     }
   },
 
@@ -39,10 +39,8 @@ export default {
   chakra: {
     extendTheme: {
       fonts: {
-        heading: 'Raleway, sans-serif',
-        body: 'Raleway, sans-serif',
-        anchor: 'Raleway, sans-serif',
-        text: 'Raleway, sans-serif'
+        heading: 'Poppins',
+        body: 'Poppins'
       }
     }
   },
