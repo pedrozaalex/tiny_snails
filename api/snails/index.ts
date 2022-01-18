@@ -73,7 +73,9 @@ router.get('/:alias', async (req, res, _next) => {
     q.Get(q.Match(q.Index('aliases'), alias))
   );
 
-  await faunaClient.query(
+  if (!doc.data) return res.status(404).json({ error: 'not found' });
+
+  faunaClient.query(
     q.Update(q.Ref(doc.ref), { data: { clicks: doc.data.clicks + 1 } })
   );
 

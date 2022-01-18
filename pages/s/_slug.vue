@@ -3,13 +3,13 @@
 </template>
 
 <script>
-import axios from 'axios';
 export default {
-  async fetch({ params: { slug }, redirect }) {
+  async fetch({ params: { slug }, redirect, $axios }) {
     try {
-      const { data } = await axios.get(`api/snails/${slug}`);
+      const { data } = await $axios.get(`/api/snails/${slug}`);
       return redirect(data.url);
     } catch (error) {
+      console.error('error when fetching original url: ', error);
       return redirect('/404');
     }
   },
