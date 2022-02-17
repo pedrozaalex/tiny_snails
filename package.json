@@ -28,7 +28,7 @@
     "helmet": "^4.6.0",
     "jwks-rsa": "^2.0.5",
     "morgan": "^1.10.0",
-    "nuxt": "^2.15.7",
+    "nuxt": "^2.15.8",
     "yup": "^0.32.11"
   },
   "devDependencies": {
