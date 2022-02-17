@@ -1,6 +1,5 @@
 export default {
-  // Target: https://go.nuxtjs.dev/config-target
-  target: 'server',
+  ssr: true,
 
   server: {
     host: '0'
