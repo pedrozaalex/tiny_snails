@@ -20,7 +20,7 @@
     "@types/cookie-parser": "^1.4.2",
     "@types/csurf": "^1.11.2",
     "cookie-parser": "^1.4.6",
-    "core-js": "^3.15.1",
+    "core-js": "^3.20.1",
     "csurf": "^1.11.0",
     "express": "^4.17.1",
     "express-jwt": "^6.1.0",
