@@ -1,5 +1,6 @@
 export default {
-  ssr: true,
+  target: 'static',
+  ssr: false,
 
   server: {
     host: '0'
