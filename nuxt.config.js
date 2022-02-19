@@ -40,15 +40,6 @@ export default {
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [],
 
-  chakra: {
-    extendTheme: {
-      fonts: {
-        heading: 'Poppins',
-        body: 'Poppins'
-      }
-    }
-  },
-
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
 
@@ -56,7 +47,23 @@ export default {
   buildModules: [
     // https://go.nuxtjs.dev/typescript
     '@nuxt/typescript-build',
-    '@nuxtjs/google-fonts'
+    [
+      '@nuxtjs/google-fonts',
+      {
+        families: {
+          Poppins: {
+            wght: [400, 600, 700],
+          },
+        },
+        subsets: ['latin'],
+        display: 'swap',
+        prefetch: false,
+        preconnect: false,
+        preload: false,
+        download: true,
+        base64: false,
+      },
+    ],
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
