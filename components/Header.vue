@@ -1,18 +1,17 @@
 <template>
   <CFlex justify="space-between" pos="absolute" top="0" w="100%" p="3">
-    <CHeading>
-      <CFlex align="flex-start">
-        <nuxt-link to="/">
-          tiny snails
-          <CImage src="snail.png" ml="1" d="inline-block" size="10" />
-        </nuxt-link>
-      </CFlex>
-    </CHeading>
+    <nuxt-link to="/">
+      <CHeading as="h1">
+        tiny snails
+        <CImage src="snail.png" ml="1" d="inline-block" size="10"/>
+      </CHeading>
+    </nuxt-link>
     <nav>
       <CFlex align="center" class="navLinks">
         <!-- Leaderboard -->
         <CLink as="nuxt-link" to="/leaderboard" class="leaderboard"
-          >leaderboard</CLink
+        >leaderboard
+        </CLink
         >
 
         <!-- Unlogged user -->
@@ -60,9 +59,9 @@
         placement="right"
         :on-close="closeDrawer"
       >
-        <CDrawerOverlay />
+        <CDrawerOverlay/>
         <CDrawerContent max-width="60vw">
-          <CDrawerCloseButton />
+          <CDrawerCloseButton/>
           <CDrawerBody>
             <CStack direction="column" spacing="5" align="start">
               <!-- Toggle dark mode -->
@@ -76,7 +75,8 @@
 
               <!-- Leaderboard -->
               <CLink as="nuxt-link" to="/leaderboard" class="leaderboard"
-                >leaderboard</CLink
+              >leaderboard
+              </CLink
               >
 
               <!-- Unlogged user -->
@@ -144,6 +144,7 @@ export default {
   padding-right: 0.5rem;
   padding-left: 0.5rem;
 }
+
 #drawerButton {
   display: none;
 }
@@ -152,6 +153,7 @@ export default {
   .navLinks {
     display: none;
   }
+
   #drawerButton {
     display: block;
   }

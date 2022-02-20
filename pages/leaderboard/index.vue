@@ -1,34 +1,46 @@
 <template>
   <CBox text-align="center">
     <CFlex direction="column" align="center">
-      <CHeading
-        >top snails <CImage src="trophy.png" ml="1" d="inline-block" size="10"
-      /></CHeading>
+      <CHeading as="h2" size="lg">
+        top snails
+        <CImage src="trophy.png" ml="1" d="inline-block" size="10"/>
+      </CHeading>
       <CFlex
-        class="leaderboardHeader"
-        justify="space-between"
-        mt="5"
-        px="4vw"
-        pb="0"
-      >
-        <CText>alias</CText>
-        <CText>clicks</CText>
-      </CFlex>
-      <CFlex
-        overflow-y="auto"
-        height="50vh"
-        class="leaderboard"
-        as="ul"
         direction="column"
+        class="leaderboard"
       >
-        <CSpinner v-if="loading" color="orange.300" margin="auto" />
+        <CFlex
+          class="leaderboardHeader"
+          justify="space-between"
+          font-weight="600"
+          p="4"
+          border-bottom="1px solid #aaa"
+        >
+          <CText ml="10%">alias</CText>
+          <CText>url</CText>
+          <CText>clicks</CText>
+        </CFlex>
+        <CFlex
+          overflow="hidden"
+          direction="column"
+          flex-grow="1"
+        >
+          <CSpinner v-if="loading" color="orange.300" margin="auto"/>
 
-        <leaderboard-card
-          v-for="snail in mySnails"
-          v-else
-          :key="snail.alias"
-          :snail="snail"
-        />
+          <CList
+            v-else
+            overflow="auto"
+            list-style="none"
+            class="snailList"
+          >
+            <leaderboard-card
+              v-for="(snail, index) in mySnails"
+              :key="snail.alias"
+              :snail="snail"
+              :rank="index + 1"
+            />
+          </CList>
+        </CFlex>
       </CFlex>
     </CFlex>
   </CBox>
@@ -36,6 +48,7 @@
 
 <script>
 import axios from 'axios';
+
 export default {
   name: 'Leaderboard',
   data() {
@@ -49,7 +62,8 @@ export default {
   },
   methods: {
     async fetchSnails() {
-      const { data } = await axios.get('/api/snails');
+      const {data} = await axios.get('/api/snails');
+      console.log(data);
       this.mySnails = data;
       this.loading = false;
     }
@@ -57,51 +71,40 @@ export default {
 };
 </script>
 
-<style  scoped>
-div {
-  --leaderboard-width: 25vmax;
-}
-
+<style scoped>
 .leaderboard {
   margin: 1rem auto;
-  padding: 1rem;
-  max-height: 50vh;
-  width: var(--leaderboard-width);
-  overflow: auto;
+  width: 70vmin;
   text-align: justify;
-  border-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
   border: 1px solid rgba(204, 204, 204, 0.664);
   background-color: #0000001e;
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
-}
-
-.leaderboardHeader {
-  width: var(--leaderboard-width);
-}
-
-@media only screen and (max-width: 1100px) {
-  .leaderboard {
-    --leaderboard-width: 40vw;
-  }
+  height: 50vh;
+  max-height: 50vh;
+  overflow: hidden;
+  padding-bottom: 0.5rem;
 }
 
 @media only screen and (max-width: 768px) {
   .leaderboard {
-    --leaderboard-width: 60vw;
-  }
-}
-
-@media only screen and (max-width: 500px) {
-  .leaderboard {
-    --leaderboard-width: 75vw;
-  }
-}
-
-@media only screen and (max-width: 350px) {
-  .leaderboard {
-    --leaderboard-width: 100vw;
+    width: 100vw;
     border-radius: 0;
     border: none;
+    box-shadow: none;
+  }
+}
+
+.snailList {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+@media only screen and (max-width: 768px) {
+  .snailList {
+    padding-left: 0;
+    padding-right: 0;
   }
 }
 </style>

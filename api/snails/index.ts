@@ -10,16 +10,18 @@ const faunaClient = new faunadb.Client({
 });
 const q = faunadb.query;
 
-// return 100 most popular urls for leaderboard
+// return 50 most popular urls for leaderboard
 router.get('/', async (_req, _res, _next) => {
   try {
     const query: any = await faunaClient.query(
-      q.Paginate(q.Match(q.Index('top_aliases_by_clicks')))
+      q.Paginate(q.Match(q.Index('top_aliases_by_clicks_new')), { size: 50 })
     );
     const result = query.data.map((item: any) => {
+      console.log(item);
       return {
         clicks: item[0],
-        alias: item[1]
+        alias: item[1],
+        url: item[2]
       };
     });
     _res.json(result);

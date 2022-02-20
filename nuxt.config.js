@@ -45,7 +45,8 @@ export default {
       '@nuxtjs/google-fonts',
       {
         families: {
-          Poppins: [400, 700],
+          Poppins: [400, 600, 700],
+          'Roboto Condensed': [400]
         },
         display: 'swap',
       },

@@ -1,14 +1,16 @@
 <template>
-  <CStack is-inline spacing="5" class="leaderboardCard" as="li">
-    <CBox class="alias">
-      <CLink :href="$config.baseURL + '/s/' + snail.alias">
-        {{ snail.alias }}
-      </CLink>
-    </CBox>
-    <CBox class="clicks">
+  <CListItem class="leaderboardCard">
+    <CText w="10%">{{ rank }}</CText>
+    <CLink class="alias" w="35%" :href="$config.baseURL + '/s/' + snail.alias">
+      {{ snail.alias }}
+    </CLink>
+    <CLink class="url" :title="snail.url" w="35%" :href="snail.url">
+      {{ removeUrlProtocol(snail.url) }}
+    </CLink>
+    <CText w="20%" text-align="right">
       {{ snail.clicks }}
-    </CBox>
-  </CStack>
+    </CText>
+  </CListItem>
 </template>
 
 <script>
@@ -17,6 +19,15 @@ export default {
     snail: {
       type: Object,
       required: true
+    },
+    rank: {
+      type: Number,
+      required: true
+    }
+  },
+  methods: {
+    removeUrlProtocol(url) {
+      return url.replace(/^(?:https?:\/\/)?(?:www\.)?/i, '');
     }
   }
 };
@@ -24,26 +35,58 @@ export default {
 
 <style scoped>
 .leaderboardCard {
+  font-family: 'Roboto Condensed', sans-serif;
+  width: 100%;
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.8rem;
+  padding: 0.6rem 0.8rem 0.6rem 0;
 }
 
-.leaderboardCard div {
-  /* padding: 5px; */
+@media screen and (max-width: 768px) {
+  .leaderboardCard {
+    padding-right: 0;
+    padding-left: 0;
+  }
+}
+
+.leaderboardCard p {
+  font-family: inherit;
+}
+
+.leaderboardCard p, a {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  display: inline-block;
 }
 
-.leaderboardCard .alias {
-  width: 75%;
+.leaderboardCard p:first-child {
+  margin-left: 0.5rem;
 }
 
-.leaderboardCard .clicks {
-  text-align: center;
-  width: 25%;
+.leaderboardCard p:last-child {
+  margin-right: 0.5rem;
+}
+
+.leaderboardCard:not(:last-child) {
+  border-bottom: 1px solid #afbed2;
+}
+
+@media screen and (min-width: 400px) {
+  .alias {
+    width: 25%;
+  }
+
+  .url {
+    width: 45%;
+  }
+}
+@media screen and (min-width: 600px) {
+  .alias {
+    width: 20%;
+  }
+
+  .url {
+    width: 50%;
+  }
 }
 </style>>
