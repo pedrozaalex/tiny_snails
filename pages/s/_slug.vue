@@ -15,7 +15,7 @@ export default {
       return redirect('/404');
     }
 
-    if(RegExp($config.baseUrl).test(url)) {
+    if(RegExp($config.baseUrl + 's\/\\w+').test(url)) {
       return redirect('/cheeky');
     }
 
