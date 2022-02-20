@@ -2,11 +2,11 @@
   <CStack is-inline spacing="5" class="snailCardRow" as="li">
     <CBox class="alias">
       <CLink :href="$config.baseURL + '/s/' + snail.alias">{{
-        $config.baseURL + '/s/' + snail.alias
+        snail.alias
       }}</CLink>
     </CBox>
     <CBox class="url">
-      <CLink :href="snail.url">{{ snail.url }}</CLink>
+      <CLink :href="snail.url">{{ removeUrlProtocol(snail.url) }}</CLink>
     </CBox>
     <CBox class="clicks">
       {{ snail.clicks }}
@@ -54,6 +54,9 @@ export default {
       } finally {
         this.loading = false;
       }
+    },
+    removeUrlProtocol(url) {
+      return url.replace(/^(?:https?:\/\/)?(?:www\.)?/i, '');
     }
   }
 };
