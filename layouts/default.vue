@@ -14,6 +14,7 @@
 </template>
 <script>
 import {CBox, CColorModeProvider, CReset, CThemeProvider} from '@chakra-ui/vue';
+import VueCookies from 'vue-cookies';
 import AppBody from '~/components/AppBody.vue';
 
 export default {
