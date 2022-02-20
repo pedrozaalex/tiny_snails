@@ -5,7 +5,7 @@
     </CHeading>
     <CBox v-else>
       <CHeading>your snails:</CHeading>
-      <CSpinner v-if="loading" color="orange.300" />
+      <CSpinner v-if="loading" color="orange.300"/>
       <CBox v-else>
         <CBox overflow-y="auto" max-height="50%" class="snailList" as="ul">
           <snail-card
@@ -22,6 +22,7 @@
 
 <script>
 import axios from 'axios';
+
 export default {
   middleware: 'auth',
   data() {
@@ -63,11 +64,20 @@ export default {
   padding: 5px;
   max-height: 50vh;
   width: 90%;
+  max-width: 50rem;
   overflow: auto;
   text-align: justify;
   border-radius: 5px;
   border: 1px solid rgba(204, 204, 204, 0.664);
   background-color: #0000000e;
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+}
+
+@media screen and (max-width: 768px) {
+  .snailList {
+    width: 100%;
+    border-radius: 0;
+    max-height: 70vh;
+  }
 }
 </style>

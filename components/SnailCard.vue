@@ -1,5 +1,4 @@
 <template>
-  <CListItem class="snailCard">
     <CStack is-inline spacing="5" class="snailCardRow" as="li">
       <CBox class="alias">
         <CLink :href="$config.baseURL + '/s/' + snail.alias">{{
@@ -13,7 +12,7 @@
         {{ snail.clicks }}
       </CBox>
       <CButton
-        class="delete"
+        p="0"
         variant-color="red"
         :disabled="loading"
         @click="deleteSnail"
@@ -22,7 +21,6 @@
         <div v-else><CIcon name="close" /></div>
       </CButton>
     </CStack>
-  </CListItem>
 </template>
 
 <script>
@@ -65,31 +63,19 @@ export default {
 </script>
 
 <style>
-.snailCard {
-  font-family: 'Roboto Condensed', sans-serif;
-  width: 100%;
-  display: flex;
-  padding: 0.6rem 0.8rem 0.6rem 0;
-}
-
-@media screen and (max-width: 768px) {
-  .snailCard {
-    padding-right: 0;
-    padding-left: 0;
-  }
-}
-
 .snailCardRow {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   padding: 0.5rem;
+}
+
+.snailCardRow:not(:last-child) {
   border-bottom: 1px solid #ccc;
 }
 
 .snailCardRow div {
-  /* padding: 5px; */
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -104,6 +90,7 @@ export default {
 }
 
 .snailCardRow .clicks {
-  width: 5%;
+  width: 10%;
+  text-overflow: clip;
 }
 </style>>
