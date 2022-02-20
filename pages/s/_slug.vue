@@ -16,7 +16,7 @@ export default {
     }
 
     if(RegExp($config.baseUrl).test(url)) {
-      return redirect(`${$config.baseUrl}/${url}`);
+      return redirect('/cheeky');
     }
 
     return redirect(url);
