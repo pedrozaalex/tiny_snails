@@ -1,5 +1,8 @@
 <h1 align="center">
-	tiny snails 🐌
+	tiny snails <img
+		width="40"
+		alt="tiny snails"
+		src="https://github.com/pedrozaalex/tiny_snails/raw/master/static/snail.png">
 </h1>
 
 <h3 align="center">
