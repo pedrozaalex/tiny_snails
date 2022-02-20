@@ -1,1 +1,6 @@
-<template><h1>You are one cheeky bastard!</h1></template>
+<template>
+  <CBox>
+    <CHeading as="h2" size="lg" text-align="center">You are one cheeky bastard!</CHeading>
+    <CImage src="https://i.imgur.com/nWGCwiE.gif" alt="You are one cheeky bastard!" m="2rem auto"/>
+  </CBox>
+</template>
