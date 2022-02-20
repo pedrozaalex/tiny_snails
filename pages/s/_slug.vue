@@ -4,11 +4,6 @@
 
 <script>
 export default {
-  methods: {
-    getBaseUrl() {
-      return this.$config.baseUrl;
-    }
-  },
   async fetch({params: {slug}, redirect, $axios}, $config) {
     let url;
     try {
@@ -19,8 +14,6 @@ export default {
       console.log(error);
       return redirect('/404');
     }
-
-    console.log("baseUrl: ", $config.baseUrl);
 
     if (RegExp('tny-snls.xyz/s\/\\w+').test(url)) {
       return redirect('/cheeky');
