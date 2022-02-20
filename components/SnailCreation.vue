@@ -11,14 +11,14 @@
       <CInput
         id="url"
         v-model="inputUrl"
-        type="text"
+        type="url"
         aria-describedby="url-helper-text"
         aria-placeholder="URL to shorten"
         placeholder="URL to shorten"
         focus-border-color="indigo.100"
         @keyup.enter="createSnail"
       />
-      <br />
+      <br/>
       <CFormLabel for="slug">shortened url:</CFormLabel>
       <CInputGroup @keyup.enter="createSnail">
         <CInputLeftAddon color="orange.300">
@@ -29,7 +29,8 @@
           v-model="inputSlug"
           type="text"
           aria-describedby="slug-helper-text"
-          aria-placeholder="URL to shorten"
+          aria-placeholder="Shortened URL"
+          placeholder="slug"
           focus-border-color="indigo.100"
           rounded-left="0"
           error-border-color="crimson"
@@ -42,7 +43,7 @@
       <CFormErrorMessage>
         {{ request.error }}
       </CFormErrorMessage>
-      <br />
+      <br/>
       <CButton
         mt="2"
         variant-color="indigo"
@@ -50,7 +51,8 @@
         font-weight="bold"
         @click="createSnail"
       >
-        shorten it!</CButton
+        shorten it!
+      </CButton
       >
     </CFormControl>
   </CFlex>
@@ -58,7 +60,7 @@
 
 <script>
 import axios from 'axios';
-import { string, object } from 'yup';
+import {object, string} from 'yup';
 
 const schema = object().shape({
   url: string().url().required(),
@@ -66,6 +68,7 @@ const schema = object().shape({
 });
 
 export default {
+
   name: 'App',
   data() {
     return {
@@ -76,7 +79,8 @@ export default {
         loading: false,
         success: null,
         data: null
-      }
+      },
+      placeholderSlug: ''
     };
   },
   methods: {
@@ -86,7 +90,7 @@ export default {
       const slug = this.inputSlug;
 
       try {
-        await schema.validate({ url, slug }, { abortEarly: false });
+        await schema.validate({url, slug}, {abortEarly: false});
       } catch (error) {
         this.request.error = error.errors.join(', ');
       }
@@ -108,7 +112,7 @@ export default {
             Authorization: await this.$auth.strategy.token.get()
           };
 
-        const { data } = await axios.post('/api/snails', body, params);
+        const {data} = await axios.post('/api/snails', body, params);
 
         this.request.loading = false;
         this.request.success = true;
@@ -121,8 +125,8 @@ export default {
 
         this.request.loading = false;
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

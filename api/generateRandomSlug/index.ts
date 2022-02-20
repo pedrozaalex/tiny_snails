@@ -5,13 +5,13 @@ const faunaClient = new faunadb.Client({
 });
 const q = faunadb.query;
 
+const slugExists = async (s: string) =>
+  await faunaClient.query(q.Exists(q.Match(q.Index('aliases'), s)));
+
 const generateRandomSlug = async (tries: number = 0): Promise<string> => {
   const chars = process.env.SLUG_CHARS ?? 'abcdefghijklmnopqrstuvwxyz';
   const length = process.env.SLUG_LENGTH ?? 6;
   const maxTries = process.env.SLUG_MAX_TRIES ?? 5;
-
-  const slugExists = async (s: string) =>
-    await faunaClient.query(q.Exists(q.Match(q.Index('aliases'), s)));
 
   const slug = [...Array(length).keys()]
     .map(() => chars[Math.floor(Math.random() * chars.length)])
