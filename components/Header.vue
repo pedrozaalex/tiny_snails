@@ -136,6 +136,20 @@ export default {
     closeDrawer() {
       this.isDrawerOpen = false;
     }
+  },
+  watch: {
+    colorMode (newVal) {
+      if (!process.client) { return }
+      window.$cookies.set("theme", this.$chakraColorMode(), 63072000);
+    }
+  },
+  created () {
+    if (!process.client) return
+    const savedColorMode = window.$cookies.get("theme")
+    if (!savedColorMode) return
+    if ((savedColorMode && this.colorMode) && (this.colorMode !== savedColorMode)) {
+      this.$toggleColorMode()
+    }
   }
 };
 </script>
