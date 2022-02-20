@@ -4,7 +4,7 @@
 
 <script>
 export default {
-  async fetch({params: {slug}, redirect, $axios, $config}) {
+  async fetch({params: {slug}, redirect, $axios}) {
     let url;
     try {
       url = (await $axios.get(`/api/snails/${slug}`)).data.url;
@@ -15,7 +15,7 @@ export default {
       return redirect('/404');
     }
 
-    if(RegExp($config.baseUrl).test(url)) {
+    if(RegExp(this.$config.baseUrl + '/s\/\\w+').test(url)) {
       return redirect('/cheeky');
     }
 
