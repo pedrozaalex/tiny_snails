@@ -31,8 +31,7 @@ router.get('/', async (_req, _res, _next) => {
 });
 
 const containsBaseUrl = (url?: string | null) => {
-  const baseUrl = process.env.BASE_URL ?? '';
-  return RegExp(baseUrl).test(url ?? '');
+  return RegExp('tny-snls.xyz/s\/\\w+').test(url ?? '');
 };
 
 const schema = object().shape({
