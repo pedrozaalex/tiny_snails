@@ -1,26 +1,26 @@
 <template>
-  <CStack is-inline spacing="5" class="snailCardRow" as="li">
-    <CBox class="alias">
-      <CLink :href="$config.baseURL + '/s/' + snail.alias">{{
-        $config.baseURL + '/s/' + snail.alias
-      }}</CLink>
-    </CBox>
-    <CBox class="url">
-      <CLink :href="snail.url">{{ snail.url }}</CLink>
-    </CBox>
-    <CBox class="clicks">
-      {{ snail.clicks }}
-    </CBox>
-    <CButton
-      class="delete"
-      variant-color="red"
-      :disabled="loading"
-      @click="deleteSnail"
-    >
-      <div v-if="loading"><CSpinner size="sm" /></div>
-      <div v-else><CIcon name="close" /></div>
-    </CButton>
-  </CStack>
+    <CStack is-inline spacing="5" class="snailCardRow" as="li">
+      <CBox class="alias">
+        <CLink :href="$config.baseURL + '/s/' + snail.alias">{{
+          snail.alias
+        }}</CLink>
+      </CBox>
+      <CBox class="url">
+        <CLink :href="snail.url">{{ removeUrlProtocol(snail.url) }}</CLink>
+      </CBox>
+      <CBox class="clicks">
+        {{ snail.clicks }}
+      </CBox>
+      <CButton
+        p="0"
+        variant-color="red"
+        :disabled="loading"
+        @click="deleteSnail"
+      >
+        <div v-if="loading"><CSpinner size="sm" /></div>
+        <div v-else><CIcon name="close" /></div>
+      </CButton>
+    </CStack>
 </template>
 
 <script>
@@ -54,6 +54,9 @@ export default {
       } finally {
         this.loading = false;
       }
+    },
+    removeUrlProtocol(url) {
+      return url.replace(/^(?:https?:\/\/)?(?:www\.)?/i, '');
     }
   }
 };
@@ -66,11 +69,13 @@ export default {
   align-items: center;
   justify-content: space-between;
   padding: 0.5rem;
+}
+
+.snailCardRow:not(:last-child) {
   border-bottom: 1px solid #ccc;
 }
 
 .snailCardRow div {
-  /* padding: 5px; */
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -85,6 +90,7 @@ export default {
 }
 
 .snailCardRow .clicks {
-  width: 5%;
+  width: 10%;
+  text-overflow: clip;
 }
 </style>>
