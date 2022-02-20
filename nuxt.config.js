@@ -7,7 +7,7 @@ export default {
   },
 
   generate: {
-    fallback: true
+    fallback: 'redirect.html'
   },
 
   serverMiddleware: {
@@ -28,12 +28,6 @@ export default {
     link: [{rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'}]
   },
 
-  googleFonts: {
-    families: {
-      Poppins: [400, 700]
-    }
-  },
-
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [],
 
@@ -51,17 +45,9 @@ export default {
       '@nuxtjs/google-fonts',
       {
         families: {
-          Poppins: {
-            wght: [400, 600, 700],
-          },
+          Poppins: [400, 700],
         },
-        subsets: ['latin'],
         display: 'swap',
-        prefetch: false,
-        preconnect: false,
-        preload: false,
-        download: true,
-        base64: false,
       },
     ],
   ],
@@ -99,5 +85,14 @@ export default {
 
   axios: {
     baseURL: process.env.BASE_URL
-  }
+  },
+
+  chakra: {
+    extendTheme: {
+      fonts: {
+        heading: 'Poppins',
+        body: 'Poppins'
+      }
+    }
+  },
 };
