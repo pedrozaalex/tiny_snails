@@ -29,7 +29,8 @@
           v-model="inputSlug"
           type="text"
           aria-describedby="slug-helper-text"
-          aria-placeholder="URL to shorten"
+          aria-placeholder="Shortened URL"
+          :placeholder="placeholderSlug"
           focus-border-color="indigo.100"
           rounded-left="0"
           error-border-color="crimson"
@@ -57,6 +58,7 @@
 </template>
 
 <script>
+import generateRandomSlug from '/api/generateRandomSlug'
 import axios from 'axios';
 import { string, object } from 'yup';
 
@@ -66,6 +68,7 @@ const schema = object().shape({
 });
 
 export default {
+
   name: 'App',
   data() {
     return {
@@ -76,7 +79,8 @@ export default {
         loading: false,
         success: null,
         data: null
-      }
+      },
+      placeholderSlug: ''
     };
   },
   methods: {
@@ -121,6 +125,11 @@ export default {
 
         this.request.loading = false;
       }
+    }
+  },
+  watch: {
+    inputUrl (newVal) {
+      this.placeholderSlug = generateRandomSlug();
     }
   }
 };
