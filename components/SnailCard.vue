@@ -1,26 +1,28 @@
 <template>
-  <CStack is-inline spacing="5" class="snailCardRow" as="li">
-    <CBox class="alias">
-      <CLink :href="$config.baseURL + '/s/' + snail.alias">{{
-        snail.alias
-      }}</CLink>
-    </CBox>
-    <CBox class="url">
-      <CLink :href="snail.url">{{ removeUrlProtocol(snail.url) }}</CLink>
-    </CBox>
-    <CBox class="clicks">
-      {{ snail.clicks }}
-    </CBox>
-    <CButton
-      class="delete"
-      variant-color="red"
-      :disabled="loading"
-      @click="deleteSnail"
-    >
-      <div v-if="loading"><CSpinner size="sm" /></div>
-      <div v-else><CIcon name="close" /></div>
-    </CButton>
-  </CStack>
+  <CListItem class="snailCard">
+    <CStack is-inline spacing="5" class="snailCardRow" as="li">
+      <CBox class="alias">
+        <CLink :href="$config.baseURL + '/s/' + snail.alias">{{
+          snail.alias
+        }}</CLink>
+      </CBox>
+      <CBox class="url">
+        <CLink :href="snail.url">{{ removeUrlProtocol(snail.url) }}</CLink>
+      </CBox>
+      <CBox class="clicks">
+        {{ snail.clicks }}
+      </CBox>
+      <CButton
+        class="delete"
+        variant-color="red"
+        :disabled="loading"
+        @click="deleteSnail"
+      >
+        <div v-if="loading"><CSpinner size="sm" /></div>
+        <div v-else><CIcon name="close" /></div>
+      </CButton>
+    </CStack>
+  </CListItem>
 </template>
 
 <script>
@@ -63,6 +65,20 @@ export default {
 </script>
 
 <style>
+.snailCard {
+  font-family: 'Roboto Condensed', sans-serif;
+  width: 100%;
+  display: flex;
+  padding: 0.6rem 0.8rem 0.6rem 0;
+}
+
+@media screen and (max-width: 768px) {
+  .snailCard {
+    padding-right: 0;
+    padding-left: 0;
+  }
+}
+
 .snailCardRow {
   display: flex;
   flex-direction: row;
