@@ -9,7 +9,7 @@ export default {
       return this.$config.baseUrl;
     }
   },
-  async fetch({params: {slug}, redirect, $axios, $config}) {
+  async fetch({params: {slug}, redirect, $axios}, $config) {
     let url;
     try {
       url = (await $axios.get(`/api/snails/${slug}`)).data.url;
@@ -20,7 +20,9 @@ export default {
       return redirect('/404');
     }
 
-    if(RegExp($config.baseUrl + '/s\/\\w+').test(url)) {
+    console.log("baseUrl: ", $config.baseUrl);
+
+    if (RegExp('tny-snls.xyz/s\/\\w+').test(url)) {
       return redirect('/cheeky');
     }
 
