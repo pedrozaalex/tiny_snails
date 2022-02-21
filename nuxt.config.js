@@ -1,3 +1,5 @@
+import { featherIcons, extend } from './utils/icons'
+
 export default {
   target: 'static',
   ssr: false,
@@ -89,6 +91,10 @@ export default {
   },
 
   chakra: {
+    icons: {
+      featherIcons,
+      extend
+    },
     extendTheme: {
       fonts: {
         heading: 'Poppins',

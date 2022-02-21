@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "nuxt",
+    "dev": "nuxt --hostname 0.0.0.0",
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
@@ -25,6 +25,7 @@
     "express": "^4.17.3",
     "express-jwt": "^6.1.0",
     "faunadb": "^4.5.2",
+    "feather-icons-paths": "^1.1.1",
     "helmet": "^5.0.2",
     "jwks-rsa": "^2.0.5",
     "morgan": "^1.10.0",
