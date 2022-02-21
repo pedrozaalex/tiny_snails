@@ -76,8 +76,7 @@ export default {
   margin: 1rem auto;
   width: 70vmin;
   text-align: justify;
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
+  border-radius: 5px;
   border: 1px solid rgba(204, 204, 204, 0.664);
   background-color: #0000001e;
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
