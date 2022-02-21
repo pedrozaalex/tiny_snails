@@ -31,7 +31,10 @@ router.get('/', async (_req, _res, _next) => {
 });
 
 const containsBaseUrl = (url?: string | null) => {
-  return RegExp('tny-snls.xyz/s\/\\w+').test(url ?? '');
+  return (
+    RegExp('tny-snls.xyz/s\/\\w+').test(url ?? '') ||
+    RegExp('tny-snls.xyz/s\/\\w+').test(decodeURI(url) ?? '')
+  );
 };
 
 const containsSlur = (url?: string | null) => {
