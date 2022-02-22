@@ -92,7 +92,6 @@ export default {
 
   chakra: {
     icons: {
-      featherIcons,
       extend
     },
     extendTheme: {
