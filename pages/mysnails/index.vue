@@ -58,7 +58,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .snailList {
   margin: 5px auto;
   padding: 5px;
