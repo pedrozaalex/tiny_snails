@@ -15,7 +15,10 @@ export default {
       return redirect('/404');
     }
 
-    if (RegExp('tny-snls.xyz/s\/\\w+').test(url)) {
+    if (
+      /tny-snls.xyz\/s\/\w+/.test(url ?? '') ||
+      /tny-snls.xyz\/s\/\w+/.test(decodeURI(url ?? ''))
+    ) {
       return redirect('/cheeky');
     }
 

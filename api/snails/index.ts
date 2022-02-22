@@ -64,7 +64,7 @@ router.post('/', jwtCheck(false), async (req: any, res, _next) => {
     const {data}: any = await faunaClient.query(
       q.Create(q.Collection('snails'), {
         data: {
-          url,
+          url: decodeURI(url),
           owner: owner ?? '',
           alias: alias ?? (await generateRandomSlug()),
           clicks: 0
