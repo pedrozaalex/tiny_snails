@@ -60,11 +60,12 @@
 
 <script>
 import axios from 'axios';
-import {object, string} from 'yup';
+import {object} from 'yup';
+import {aliasValidator, urlValidator} from "@/utils/validators";
 
 const schema = object().shape({
-  url: string().url().required(),
-  slug: string().optional()
+  url: urlValidator,
+  slug: aliasValidator
 });
 
 export default {

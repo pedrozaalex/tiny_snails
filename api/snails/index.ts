@@ -1,8 +1,9 @@
 import {Router} from 'express';
 import faunadb from 'faunadb';
-import {object, string} from 'yup';
+import {object} from 'yup';
 import generateRandomSlug from '../generateRandomSlug';
 import jwtCheck from '../jwtCheck';
+import {aliasValidator, snailOwnerValidator, urlValidator} from "../../utils/validators";
 
 const router = Router();
 const faunaClient = new faunadb.Client({
@@ -30,28 +31,21 @@ router.get('/', async (_req, _res, _next) => {
   }
 });
 
-const containsBaseUrl = (url?: string | null) => {
-  return (
-    /tny-snls.xyz\/s\/\w+/.test(url ?? '') ||
-    /tny-snls.xyz\/s\/\w+/.test(decodeURI(url ?? ''))
-  );
-};
-
-const containsSlur = (alias?: string | null) => {
-  return RegExp('(fag(g|got|tard)?\b|cock\s?sucker(s|ing)?|ni((g{2,}|q)+|[gq]{2,})[e3r]+(s|z)?|mudslime?s?|kikes?|\bspi(c|k)s?\b|\bchinks?|gooks?|bitch(es|ing|y)?|whor(es?|ing)|\btr(a|@)nn?(y|ies?)|\b(b|re|r)tard(ed)?s?)').test(alias ?? '')
-}
-
 const schema = object().shape({
-    owner: string().trim().nullable(),
-    url: string().trim().url().required().nullable().test('base url', "you can't create a recursive url, you cheeky bastard", url => !containsBaseUrl(url)),
-    alias: string().trim().matches(/[\w-]/i).nullable().min(3).max(20).test('slur', "don't use slurs", alias => !containsSlur(alias))
+    owner: snailOwnerValidator,
+    url: urlValidator,
+    alias: aliasValidator
   })
 ;
 
 // create a new shortened url
 router.post('/', jwtCheck(false), async (req: any, res, _next) => {
-  const {url, slug: alias} = req.body;
-  const owner = req.user?.sub ?? null;
+  const {url: urlFromRequest, slug: aliasFromRequest} = req.body;
+  const owner = req.user?.sub ?? '';
+
+  const url = decodeURI(urlFromRequest);
+  const alias = aliasFromRequest ?? (await generateRandomSlug());
+
 
   try {
     await schema.validate({owner, url, alias});
@@ -64,9 +58,9 @@ router.post('/', jwtCheck(false), async (req: any, res, _next) => {
     const {data}: any = await faunaClient.query(
       q.Create(q.Collection('snails'), {
         data: {
-          url: decodeURI(url),
-          owner: owner ?? '',
-          alias: alias ?? (await generateRandomSlug()),
+          url,
+          alias,
+          owner,
           clicks: 0
         }
       })
