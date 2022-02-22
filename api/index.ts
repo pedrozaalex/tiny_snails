@@ -3,7 +3,6 @@ import morgan from 'morgan';
 import helmet from 'helmet';
 
 // routers
-import hello from './hello';
 import snails from './snails';
 import owners from './owners';
 
@@ -13,7 +12,6 @@ app.use(helmet());
 app.use(express.json());
 app.use(morgan('dev'));
 
-app.use('/hello', hello);
 app.use('/snails', snails);
 app.use('/owners', owners);
 

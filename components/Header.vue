@@ -8,6 +8,10 @@
     </nuxt-link>
     <nav>
       <CFlex align="center" class="navLinks">
+        <CLink display="inline-block" href="https://github.com/pedrozaalex/tiny_snails/" aria-label="GitHub" isExternal>
+          <CIcon name="github" size="24px"/>
+        </CLink>
+
         <!-- Leaderboard -->
         <CLink as="nuxt-link" to="/leaderboard" class="leaderboard"
         >leaderboard
@@ -70,6 +74,9 @@
                 :aria-label="`Switch to ${
                   colorMode === 'light' ? 'dark' : 'light'
                 } mode`"
+                :title="`Switch to ${
+                  colorMode === 'light' ? 'dark' : 'light'
+                } mode`"
                 @click="toggleColorMode"
               />
 
@@ -105,6 +112,11 @@
               >
                 sign out
               </CLink>
+
+              <CLink display="inline-block" href="https://github.com/pedrozaalex/tiny_snails/" aria-label="GitHub"
+                     isExternal>
+                <CIcon name="github" size="24px"/>
+              </CLink>
             </CStack>
           </CDrawerBody>
         </CDrawerContent>
@@ -138,12 +150,14 @@ export default {
     }
   },
   watch: {
-    colorMode (newVal) {
-      if (!process.client) { return }
+    colorMode(newVal) {
+      if (!process.client) {
+        return
+      }
       window.$cookies.set("theme", this.$chakraColorMode(), 63072000);
     }
   },
-  created () {
+  created() {
     if (!process.client) return
     const savedColorMode = window.$cookies.get("theme")
     if (!savedColorMode) return

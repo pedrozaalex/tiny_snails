@@ -1,3 +1,5 @@
+import { extend } from './utils/icons'
+
 export default {
   target: 'static',
   ssr: false,
@@ -89,6 +91,9 @@ export default {
   },
 
   chakra: {
+    icons: {
+      extend
+    },
     extendTheme: {
       fonts: {
         heading: 'Poppins',

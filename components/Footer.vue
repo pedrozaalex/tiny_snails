@@ -1,22 +1,7 @@
 <template>
-  <footer>
-    <CBox pos="absolute" bottom="0" w="100%" p="2">
-      <CText text-align="center">
-        made with
-        <CImage src="purple-heart.png" d="inline-block" size="4"/>
-        by
-        <CLink
-          class="nameLink"
-          href="https://github.com/pedrozaalex"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Alexandre Pedroza
-        </CLink
-        >
-      </CText>
-    </CBox>
-  </footer>
+  <CStack as="footer" :spacing="4" mt={12} justifyContent="center" is-inline>
+
+  </CStack>
 </template>
 
 <style>
