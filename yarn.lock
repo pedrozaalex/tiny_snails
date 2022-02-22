@@ -2584,11 +2584,6 @@
     "@typescript-eslint/types" "5.12.0"
     eslint-visitor-keys "^3.0.0"
 
-"@vitejs/plugin-vue@^1.2.5":
-  version "1.10.2"
-  resolved "https://registry.yarnpkg.com/@vitejs/plugin-vue/-/plugin-vue-1.10.2.tgz#d718479e2789d8a94b63e00f23f1898ba239253a"
-  integrity sha512-/QJ0Z9qfhAFtKRY+r57ziY4BSbGUTGsPRMpB/Ron3QPwBZM4OZAZHdTa4a8PafCwU5DTatXG8TMDoP8z+oDqJw==
-
 "@vue/babel-helper-vue-jsx-merge-props@^1.2.1":
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/@vue/babel-helper-vue-jsx-merge-props/-/babel-helper-vue-jsx-merge-props-1.2.1.tgz#31624a7a505fb14da1d58023725a4c5f270e6a81"
@@ -6207,13 +6202,6 @@ fd-slicer@~1.1.0:
   integrity sha1-JcfInLH5B3+IkbvmHY85Dq4lbx4=
   dependencies:
     pend "~1.2.0"
-
-feather-icons-paths@^1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/feather-icons-paths/-/feather-icons-paths-1.1.1.tgz#fa6161e5d459639992847f5fd968705b553d9a97"
-  integrity sha512-/tJRkJiRD3U3ZxxAFahlAnFYyYf6FyupwHbWZCi4W+5DAmNeJVvmSXFeDvWY0VT+RTcqqpCdNtT3YnDUfZyTKw==
-  dependencies:
-    "@vitejs/plugin-vue" "^1.2.5"
 
 figgy-pudding@^3.5.1:
   version "3.5.2"
