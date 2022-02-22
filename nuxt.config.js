@@ -1,4 +1,4 @@
-import { featherIcons, extend } from './utils/icons'
+import { extend } from './utils/icons'
 
 export default {
   target: 'static',
