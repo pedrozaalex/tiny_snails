@@ -33,7 +33,6 @@
           placeholder="slug"
           focus-border-color="indigo.100"
           rounded-left="0"
-          error-border-color="crimson"
           @keyup.enter="createSnail"
         />
       </CInputGroup>
@@ -91,9 +90,11 @@ export default {
       const slug = this.inputSlug;
 
       try {
-        await schema.validate({url, slug}, {abortEarly: false});
+        const toBeValidated = slug ? {url, slug} : {url};
+        await schema.validate(toBeValidated, {abortEarly: false});
       } catch (error) {
         this.request.error = error.errors.join(', ');
+        return;
       }
 
       this.request.loading = true;

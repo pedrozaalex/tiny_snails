@@ -32,11 +32,10 @@ router.get('/', async (_req, _res, _next) => {
 });
 
 const schema = object().shape({
-    owner: snailOwnerValidator,
-    url: urlValidator,
-    alias: aliasValidator
-  })
-;
+  owner: snailOwnerValidator,
+  url: urlValidator,
+  alias: aliasValidator
+});
 
 // create a new shortened url
 router.post('/', jwtCheck(false), async (req: any, res, _next) => {
