@@ -1,23 +1,19 @@
 import { NextFunction, Request, Response } from 'express';
 import LRU from 'lru-cache';
 
-type Options = {
-  uniqueTokenPerInterval?: number;
-  interval?: number;
-};
+const tokenCache = new LRU({
+  max: parseInt(process.env.UNIQUE_TOKEN_PER_INTERVAL ?? '') || 500,
+  maxAge: parseInt(process.env.RATE_LIMIT_INTERVAL ?? '') || 60 * 1000
+});
 
-const rateLimit = (options: Options) => {
-  const tokenCache = new LRU({
-    max: options.uniqueTokenPerInterval || 500,
-    maxAge: options.interval || 60000
-  });
-
-  return {
+const rateLimit = () => ({
     check: (res: Response, limit: number, token: string) =>
       new Promise<void>((resolve, reject) => {
+        console.log('check', token);
         const tokenCount = (tokenCache.get(token) || [0]) as number[];
         if (tokenCount[0] === 0) {
           tokenCache.set(token, tokenCount);
+          console.log('token set');
         }
         tokenCount[0] += 1;
 
@@ -31,8 +27,7 @@ const rateLimit = (options: Options) => {
 
         return isRateLimited ? reject() : resolve();
       })
-  };
-};
+  });
 
 export default async function rateLimiter(
   req: Request,
@@ -40,15 +35,13 @@ export default async function rateLimiter(
   next: NextFunction
 ) {
   try {
-    await rateLimit({
-      uniqueTokenPerInterval:
-        parseInt(process.env.UNIQUE_TOKEN_PER_INTERVAL ?? '') || 500,
-      interval: parseInt(process.env.RATE_LIMIT_INTERVAL ?? '') || 1000
-    }).check(res, parseInt(
-      process.env.RATE_LIMIT_REQUESTS_PER_INTERVAL ?? ''
-    ) || 4, req.ip);
+    await rateLimit().check(
+      res,
+      parseInt(process.env.RATE_LIMIT_REQUESTS_PER_INTERVAL ?? '') || 10,
+      req.ip
+    );
     next();
   } catch {
-    res.status(429).json({ error: 'Too many requests' });
+    return res.status(429).json({ error: 'Too many requests' });
   }
 }
