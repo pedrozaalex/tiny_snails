@@ -3,20 +3,24 @@
     <nuxt-link to="/">
       <CHeading as="h1">
         tiny snails
-        <CImage src="snail.png" ml="1" d="inline-block" size="10"/>
+        <CImage src="snail.png" ml="1" d="inline-block" size="10" />
       </CHeading>
     </nuxt-link>
     <nav>
       <CFlex align="center" class="navLinks">
-        <CLink display="inline-block" href="https://github.com/pedrozaalex/tiny_snails/" aria-label="GitHub" isExternal>
-          <CIcon name="github" size="24px"/>
+        <CLink
+          display="inline-block"
+          href="https://github.com/pedrozaalex/tiny_snails/"
+          aria-label="GitHub"
+          isExternal
+        >
+          <CIcon name="github" size="24px" />
         </CLink>
 
         <!-- Leaderboard -->
         <CLink as="nuxt-link" to="/leaderboard" class="leaderboard"
-        >leaderboard
-        </CLink
-        >
+          >leaderboard
+        </CLink>
 
         <!-- Unlogged user -->
         <CLink
@@ -63,9 +67,9 @@
         placement="right"
         :on-close="closeDrawer"
       >
-        <CDrawerOverlay/>
+        <CDrawerOverlay />
         <CDrawerContent max-width="60vw">
-          <CDrawerCloseButton/>
+          <CDrawerCloseButton />
           <CDrawerBody>
             <CStack direction="column" spacing="5" align="start">
               <!-- Toggle dark mode -->
@@ -82,9 +86,8 @@
 
               <!-- Leaderboard -->
               <CLink as="nuxt-link" to="/leaderboard" class="leaderboard"
-              >leaderboard
-              </CLink
-              >
+                >leaderboard
+              </CLink>
 
               <!-- Unlogged user -->
               <CLink
@@ -113,9 +116,13 @@
                 sign out
               </CLink>
 
-              <CLink display="inline-block" href="https://github.com/pedrozaalex/tiny_snails/" aria-label="GitHub"
-                     isExternal>
-                <CIcon name="github" size="24px"/>
+              <CLink
+                display="inline-block"
+                href="https://github.com/pedrozaalex/tiny_snails/"
+                aria-label="GitHub"
+                isExternal
+              >
+                <CIcon name="github" size="24px" />
               </CLink>
             </CStack>
           </CDrawerBody>
@@ -152,17 +159,17 @@ export default {
   watch: {
     colorMode(newVal) {
       if (!process.client) {
-        return
+        return;
       }
-      window.$cookies.set("theme", this.$chakraColorMode(), 63072000);
+      window.$cookies.set('theme', this.$chakraColorMode(), 63072000);
     }
   },
   created() {
-    if (!process.client) return
-    const savedColorMode = window.$cookies.get("theme")
-    if (!savedColorMode) return
-    if ((savedColorMode && this.colorMode) && (this.colorMode !== savedColorMode)) {
-      this.$toggleColorMode()
+    if (!process.client) return;
+    const savedColorMode = window.$cookies.get('theme');
+    if (!savedColorMode) return;
+    if (savedColorMode && this.colorMode && this.colorMode !== savedColorMode) {
+      this.$toggleColorMode();
     }
   }
 };

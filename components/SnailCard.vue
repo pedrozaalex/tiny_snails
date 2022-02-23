@@ -1,26 +1,21 @@
 <template>
-    <CStack is-inline spacing="5" class="snailCardRow" as="li">
-      <CBox class="alias">
-        <CLink :href="$config.baseURL + '/s/' + snail.alias">{{
-          snail.alias
-        }}</CLink>
-      </CBox>
-      <CBox class="url">
-        <CLink :href="snail.url">{{ removeUrlProtocol(snail.url) }}</CLink>
-      </CBox>
-      <CBox class="clicks">
-        {{ snail.clicks }}
-      </CBox>
-      <CButton
-        p="0"
-        variant-color="red"
-        :disabled="loading"
-        @click="deleteSnail"
-      >
-        <div v-if="loading"><CSpinner size="sm" /></div>
-        <div v-else><CIcon name="close" /></div>
-      </CButton>
-    </CStack>
+  <CStack is-inline spacing="5" class="snailCardRow" as="li">
+    <CBox class="alias">
+      <CLink :href="$config.baseURL + '/s/' + snail.alias">{{
+        snail.alias
+      }}</CLink>
+    </CBox>
+    <CBox class="url">
+      <CLink :href="snail.url">{{ removeUrlProtocol(snail.url) }}</CLink>
+    </CBox>
+    <CBox class="clicks">
+      {{ snail.clicks }}
+    </CBox>
+    <CButton p="0" variant-color="red" :disabled="loading" @click="deleteSnail">
+      <div v-if="loading"><CSpinner size="sm" /></div>
+      <div v-else><CIcon name="close" /></div>
+    </CButton>
+  </CStack>
 </template>
 
 <script>
@@ -93,4 +88,5 @@ export default {
   width: 10%;
   text-overflow: clip;
 }
-</style>>
+</style>
+>

@@ -1,13 +1,11 @@
 <template>
-  <div class="container">
-    Redirecting...
-  </div>
+  <div class="container">Redirecting...</div>
 </template>
 
 <script>
 export default {
-  layout: 'empty',
-}
+  layout: 'empty'
+};
 </script>
 
 <style scoped>

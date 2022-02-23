@@ -3,12 +3,9 @@
     <CFlex direction="column" align="center">
       <CHeading as="h2" size="lg">
         top snails
-        <CImage src="trophy.png" ml="1" d="inline-block" size="10"/>
+        <CImage src="trophy.png" ml="1" d="inline-block" size="10" />
       </CHeading>
-      <CFlex
-        direction="column"
-        class="leaderboard"
-      >
+      <CFlex direction="column" class="leaderboard">
         <CFlex
           class="leaderboardHeader"
           justify="space-between"
@@ -20,19 +17,10 @@
           <CText>url</CText>
           <CText>clicks</CText>
         </CFlex>
-        <CFlex
-          overflow="hidden"
-          direction="column"
-          flex-grow="1"
-        >
-          <CSpinner v-if="loading" color="orange.300" margin="auto"/>
+        <CFlex overflow="hidden" direction="column" flex-grow="1">
+          <CSpinner v-if="loading" color="orange.300" margin="auto" />
 
-          <CList
-            v-else
-            overflow="auto"
-            list-style="none"
-            class="snailList"
-          >
+          <CList v-else overflow="auto" list-style="none" class="snailList">
             <leaderboard-card
               v-for="(snail, index) in mySnails"
               :key="snail.alias"
@@ -62,7 +50,7 @@ export default {
   },
   methods: {
     async fetchSnails() {
-      const {data} = await axios.get('/api/snails');
+      const { data } = await axios.get('/api/snails');
       console.log(data);
       this.mySnails = data;
       this.loading = false;

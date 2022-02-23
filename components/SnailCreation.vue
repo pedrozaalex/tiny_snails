@@ -18,7 +18,7 @@
         focus-border-color="indigo.100"
         @keyup.enter="createSnail"
       />
-      <br/>
+      <br />
       <CFormLabel for="slug">shortened url:</CFormLabel>
       <CInputGroup @keyup.enter="createSnail">
         <CInputLeftAddon color="orange.300">
@@ -42,7 +42,7 @@
       <CFormErrorMessage>
         {{ request.error }}
       </CFormErrorMessage>
-      <br/>
+      <br />
       <CButton
         mt="2"
         variant-color="indigo"
@@ -51,16 +51,15 @@
         @click="createSnail"
       >
         shorten it!
-      </CButton
-      >
+      </CButton>
     </CFormControl>
   </CFlex>
 </template>
 
 <script>
 import axios from 'axios';
-import {object} from 'yup';
-import {aliasValidator, urlValidator} from "@/utils/validators";
+import { object } from 'yup';
+import { aliasValidator, urlValidator } from '@/utils/validators';
 
 const schema = object().shape({
   url: urlValidator,
@@ -68,7 +67,6 @@ const schema = object().shape({
 });
 
 export default {
-
   name: 'App',
   data() {
     return {
@@ -90,8 +88,8 @@ export default {
       const slug = this.inputSlug;
 
       try {
-        const toBeValidated = slug ? {url, slug} : {url};
-        await schema.validate(toBeValidated, {abortEarly: false});
+        const toBeValidated = slug ? { url, slug } : { url };
+        await schema.validate(toBeValidated, { abortEarly: false });
       } catch (error) {
         this.request.error = error.errors.join(', ');
         return;
@@ -114,7 +112,7 @@ export default {
             Authorization: await this.$auth.strategy.token.get()
           };
 
-        const {data} = await axios.post('/api/snails', body, params);
+        const { data } = await axios.post('/api/snails', body, params);
 
         this.request.loading = false;
         this.request.success = true;
@@ -127,10 +125,9 @@ export default {
 
         this.request.loading = false;
       }
-    },
-  },
+    }
+  }
 };
 </script>
 
-<style>
-</style>
+<style></style>

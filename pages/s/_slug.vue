@@ -4,11 +4,11 @@
 
 <script>
 export default {
-  async fetch({params: {slug}, redirect, $axios}, $config) {
+  async fetch({ params: { slug }, redirect, $axios }, $config) {
     let url;
     try {
       url = (await $axios.get(`/api/snails/${slug}`)).data.url;
-      console.log("fetched data", url);
+      console.log('fetched data', url);
     } catch (error) {
       console.error('error when fetching original url: ', error);
       console.log(error);

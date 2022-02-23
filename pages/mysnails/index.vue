@@ -5,7 +5,7 @@
     </CHeading>
     <CBox v-else>
       <CHeading>your snails:</CHeading>
-      <CSpinner v-if="loading" color="orange.300"/>
+      <CSpinner v-if="loading" color="orange.300" />
       <CBox v-else>
         <CBox overflow-y="auto" max-height="50%" class="snailList" as="ul">
           <snail-card

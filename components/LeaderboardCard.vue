@@ -52,7 +52,8 @@ export default {
   font-family: inherit;
 }
 
-.leaderboardCard p, a {
+.leaderboardCard p,
+a {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -89,4 +90,5 @@ export default {
     width: 50%;
   }
 }
-</style>>
+</style>
+>
