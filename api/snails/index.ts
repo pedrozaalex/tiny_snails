@@ -22,7 +22,6 @@ router.get('/', async (_req, _res, _next) => {
       q.Paginate(q.Match(q.Index('top_aliases_by_clicks_new')), { size: 50 })
     );
     const result = query.data.map((item: any) => {
-      console.log(item);
       return {
         clicks: item[0],
         alias: item[1],
@@ -42,7 +41,7 @@ const schema = object().shape({
 });
 
 // create a new shortened url
-router.post('/', jwtCheck(false), async (req: any, res, _next) => {
+router.post('/', jwtCheck(false), async (req: any, res, next) => {
   const { url: urlFromRequest, slug: aliasFromRequest } = req.body;
   const owner = req.user?.sub ?? '';
 
