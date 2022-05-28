@@ -28,7 +28,7 @@
     "helmet": "^5.0.2",
     "jwks-rsa": "^2.1.0",
     "morgan": "^1.10.0",
-    "npm-check-updates": "^12.4.0",
+    "npm-check-updates": "^12.5.7",
     "nuxt": "^2.15.8",
     "vue-cookies": "^1.7.5",
     "yup": "^0.32.11"
