@@ -8,9 +8,7 @@ export default function containsBaseUrl(url?: string | null) {
 }
 
 const containsSlur = (alias?: string | null) => {
-  return RegExp(
-    '(fag(g|got|tard)?\b|cocks?sucker(s|ing)?|ni((g{2,}|q)+|[gq]{2,})[e3r]+(s|z)?|mudslime?s?|kikes?|\bspi(c|k)s?\b|\bchinks?|gooks?|bitch(es|ing|y)?|whor(es?|ing)|\btr(a|@)nn?(y|ies?)|\b(b|re|r)tard(ed)?s?)'
-  ).test(alias ?? '');
+  return /(fag(g|got|tard)?\b|cocks?sucker(s|ing)?|ni((g{2,}|q)+|[gq]{2,})[e3r]+(s|z)?|mudslime?s?|kikes?|\bspi(c|k)s?\b|\bchinks?|gooks?|bitch(es|ing|y)?|whor(es?|ing)|\btr(a|@)nn?(y|ies?)|\b(b|re|r)tard(ed)?s?)/i.test(alias ?? '');
 };
 
 export const urlValidator = string()

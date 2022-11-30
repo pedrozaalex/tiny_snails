@@ -6,3 +6,9 @@
     <CImage src="rick.gif" alt="You are one cheeky bastard!" m="2rem auto" />
   </CBox>
 </template>
+
+<script>
+export default {
+  name: 'CheekyBastardPage',
+}
+</script>

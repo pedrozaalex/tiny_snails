@@ -38,7 +38,7 @@
 import axios from 'axios';
 
 export default {
-  name: 'Leaderboard',
+  name: 'LeaderboardPage',
   data() {
     return {
       loading: true,
@@ -51,7 +51,6 @@ export default {
   methods: {
     async fetchSnails() {
       const { data } = await axios.get('/api/snails');
-      console.log(data);
       this.mySnails = data;
       this.loading = false;
     }

@@ -12,7 +12,7 @@
           display="inline-block"
           href="https://github.com/pedrozaalex/tiny_snails/"
           aria-label="GitHub"
-          isExternal
+          is-external
         >
           <CIcon name="github" size="24px" />
         </CLink>
@@ -120,7 +120,7 @@
                 display="inline-block"
                 href="https://github.com/pedrozaalex/tiny_snails/"
                 aria-label="GitHub"
-                isExternal
+                is-external
               >
                 <CIcon name="github" size="24px" />
               </CLink>
@@ -148,16 +148,8 @@ export default {
       return this.$chakraColorMode();
     }
   },
-  methods: {
-    openDrawer() {
-      this.isDrawerOpen = true;
-    },
-    closeDrawer() {
-      this.isDrawerOpen = false;
-    }
-  },
   watch: {
-    colorMode(newVal) {
+    colorMode() {
       if (!process.client) {
         return;
       }
@@ -166,10 +158,19 @@ export default {
   },
   created() {
     if (!process.client) return;
-    const savedColorMode = window.$cookies.get('theme');
+    // eslint-disable-next-line nuxt/no-globals-in-created
+    const savedColorMode = window?.$cookies?.get('theme');
     if (!savedColorMode) return;
     if (savedColorMode && this.colorMode && this.colorMode !== savedColorMode) {
       this.$toggleColorMode();
+    }
+  },
+  methods: {
+    openDrawer() {
+      this.isDrawerOpen = true;
+    },
+    closeDrawer() {
+      this.isDrawerOpen = false;
     }
   }
 };

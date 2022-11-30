@@ -4,6 +4,7 @@
 
 <script>
 export default {
+  name: 'RedirectPage',
   layout: 'empty'
 };
 </script>

@@ -9,9 +9,9 @@
     justify-content="center"
     position="relative"
   >
-    <Header />
+    <AppHeader />
     <slot />
-    <Footer />
+    <AppFooter />
   </CBox>
 </template>
 

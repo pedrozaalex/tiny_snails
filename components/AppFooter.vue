@@ -1,5 +1,5 @@
 <template>
-  <CStack as="footer" :spacing="4" mt="{12}" justifyContent="center" is-inline>
+  <CStack as="footer" :spacing="4" mt="{12}" justify-content="center" is-inline>
   </CStack>
 </template>
 
