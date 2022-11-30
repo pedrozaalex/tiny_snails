@@ -1,8 +1,14 @@
 <template>
   <CBox text-align="center">
-    <CHeading v-if="!loading && mySnails.length === 0">
+    <CBox v-if="error">
+      <CHeading>An error occurred when trying to access your snails :(</CHeading>
+      <CText>{{ error }}</CText>
+    </CBox>
+
+    <CHeading v-else-if="!loading && mySnails.length === 0">
       You have no snails :(
     </CHeading>
+
     <CBox v-else>
       <CHeading>your snails:</CHeading>
       <CSpinner v-if="loading" color="orange.300" />
@@ -24,38 +30,38 @@
 import axios from 'axios';
 
 export default {
-  name: 'MySnailsPage',
-  middleware: 'auth',
-  data() {
-    return {
-      mySnails: [],
-      loading: true,
-      error: null
-    };
-  },
-  async fetch() {
-    // Get the access token from the auth wrapper
-    const token = await this.$auth.strategy.token.get();
-
-    try {
-      const result = await axios.get('/api/owners', {
-        headers: {
-          // note: the token already has the Bearer prefix
-          Authorization: token // send the access token through the 'Authorization' header
+    name: "MySnailsPage",
+    middleware: "auth",
+    data() {
+        return {
+            mySnails: [],
+            loading: true,
+            error: null
+        };
+    },
+    async fetch() {
+        // Get the access token from the auth wrapper
+        const token = await this.$auth.strategy.token.get();
+        try {
+            const result = await axios.get("/api/owners", {
+                headers: {
+                    // note: the token already has the Bearer prefix
+                    Authorization: token // send the access token through the 'Authorization' header
+                }
+            });
+            this.mySnails = result.data.map((s) => s.data);
+            this.loading = false;
         }
-      });
-      this.mySnails = result.data.map((s) => s.data);
-      this.loading = false;
-    } catch (error) {
-      this.error = error;
-    }
-  },
-  methods: {
-    deleteSnail(snail) {
-      this.mySnails = this.mySnails.filter((s) => s.alias !== snail.alias);
-    }
-  },
-  fetchOnServer: false
+        catch (error) {
+            this.error = error;
+        }
+    },
+    methods: {
+        deleteSnail(snail) {
+            this.mySnails = this.mySnails.filter((s) => s.alias !== snail.alias);
+        }
+    },
+    fetchOnServer: false,
 };
 </script>
 
