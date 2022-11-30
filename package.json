@@ -19,6 +19,7 @@
     "@nuxtjs/emotion": "^0.1.0",
     "@types/cookie-parser": "^1.4.3",
     "@types/csurf": "^1.11.2",
+    "@vercel/analytics": "^0.1.5",
     "cookie-parser": "^1.4.6",
     "core-js": "^3.22.0",
     "csurf": "^1.11.0",
