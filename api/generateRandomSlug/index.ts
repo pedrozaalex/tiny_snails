@@ -1,9 +1,8 @@
-import faunadb from 'faunadb';
+import faunadb, { query as q } from 'faunadb';
 
 const faunaClient = new faunadb.Client({
   secret: process.env.FAUNA_SECRET_KEY ?? ''
 });
-const q = faunadb.query;
 
 const slugExists = async (s: string) =>
   await faunaClient.query(q.Exists(q.Match(q.Index('aliases'), s)));

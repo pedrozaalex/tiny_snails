@@ -1,12 +1,11 @@
 import { Router } from 'express';
-import faunadb from 'faunadb';
+import faunadb, { query as q } from 'faunadb';
 import jwtCheck from '../jwtCheck';
 
 const router = Router();
 const faunaClient = new faunadb.Client({
   secret: process.env.FAUNA_SECRET_KEY ?? ''
 });
-const q = faunadb.query;
 
 // returns all of an owner's snails
 router.get('/', jwtCheck(), async (req: any, res) => {

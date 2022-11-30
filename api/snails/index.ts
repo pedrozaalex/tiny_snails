@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import faunadb from 'faunadb';
+import faunadb, { query as q } from 'faunadb';
 import { object } from 'yup';
 import generateRandomSlug from '../generateRandomSlug';
 import jwtCheck from '../jwtCheck';
@@ -13,24 +13,25 @@ const router = Router();
 const faunaClient = new faunadb.Client({
   secret: process.env.FAUNA_SECRET_KEY ?? ''
 });
-const q = faunadb.query;
+
+type topAliasesIndexResponse = { data: [number, string, string][] };
 
 // return 50 most popular urls for leaderboard
-router.get('/', async (_req, _res, _next) => {
+router.get('/', async (_req, res, _next) => {
   try {
-    const query: any = await faunaClient.query(
+    const query = await faunaClient.query<topAliasesIndexResponse>(
       q.Paginate(q.Match(q.Index('top_aliases_by_clicks_new')), { size: 50 })
     );
-    const result = query.data.map((item: any) => {
+    const result = query.data.map((item) => {
       return {
         clicks: item[0],
         alias: item[1],
         url: item[2]
       };
     });
-    _res.json(result);
+    res.json(result);
   } catch (error) {
-    _res.json(error);
+    res.json(error);
   }
 });
 
@@ -41,7 +42,7 @@ const schema = object().shape({
 });
 
 // create a new shortened url
-router.post('/', jwtCheck(false), async (req: any, res, next) => {
+router.post('/', jwtCheck(false), async (req: any, res, _next) => {
   const { url: urlFromRequest, slug: aliasFromRequest } = req.body;
   const owner = req.user?.sub ?? '';
 
